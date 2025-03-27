@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: f93acd78b757e5a48a001bb18950cba9
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 251
+        width: 154
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d2790dc55a6994ba5f72c2df5c9507
+      internalID: 1212780305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 252
+        width: 127
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40bb21cabd5826842ae946c8f648cac9
+      internalID: 295762402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 253
+        width: 127
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca0f73cf961b2b944883fb3ebc121ce6
+      internalID: 2073433754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 135
+        width: 140
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 680710e22b7b7524b93bf392ebb34a87
+      internalID: 1788041173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 129
+        width: 136
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a16d37e0d3ee564db46c61ee3b41c40
+      internalID: -880049257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 138
+        width: 150
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe21405efbe22754dab0a9372b730feb
+      internalID: 795092735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 7
+        width: 147
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4661641d93f9cf045ba93836b99a26be
+      internalID: 1709735127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 6
+        width: 133
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdae65d78d03ec94b9b46b9111d7287a
+      internalID: -1241536107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 9
+        width: 169
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 568e27ff5ef33fd4aaee7265066fded6
+      internalID: -2078969818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2ed6844f56f2b6b498fb930922786ea2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_0: 1212780305
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_1: 295762402
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_2: 2073433754
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_3: 1788041173
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_4: -880049257
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_5: 795092735
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_6: 1709735127
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_7: -1241536107
+      DALL_E_2025-03-25_02.08.55_-_A_2D_game_asset_of_a_cute_yet_dangerous_table_monster_with_attack_animation_frames__designed_to_fit_within_the_full_frame_without_being_cropped._The_m-removebg-preview_8: -2078969818
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
