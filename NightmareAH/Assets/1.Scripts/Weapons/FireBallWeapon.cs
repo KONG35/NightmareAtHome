@@ -27,7 +27,6 @@ public class FireBallWeapon : ProjectlieWeapon
             }
             ProjectlieObject bullet = GameObject.Instantiate(ProjectlieObj, my.transform.position, Quaternion.identity).GetComponent<ProjectlieObject>();
 
-            //var pos = (my.transform.position - Target.transform.position).normalized * MaxRange + my.transform.position;
             var pos = (Target.transform.position - my.transform.position).normalized * MaxRange + Target.transform.position;
             bullet.Init(pos, 3f,1);
             bullet.HitAction = (other) =>
