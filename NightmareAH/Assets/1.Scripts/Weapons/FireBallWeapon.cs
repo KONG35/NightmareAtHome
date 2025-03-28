@@ -29,12 +29,9 @@ public class FireBallWeapon : ProjectlieWeapon
 
             //var pos = (my.transform.position - Target.transform.position).normalized * MaxRange + my.transform.position;
             var pos = (Target.transform.position - my.transform.position).normalized * MaxRange + Target.transform.position;
-            Debug.Log($" 타겟 포지션  : {Target.transform.position}   맥스 포지션  {(my.transform.position - Target.transform.position).normalized * MaxRange + my.transform.position}  중간계산 {(my.transform.position - Target.transform.position).normalized * MaxRange}");
-            Debug.Log($" 타겟 포지션  : {Target.transform.position}   맥스 포지션  {(Target.transform.position - my.transform.position).normalized * MaxRange + Target.transform.position}  중간계산 {(my.transform.position - Target.transform.position).normalized * MaxRange}");
             bullet.Init(pos, 3f,1);
             bullet.HitAction = (other) =>
             {
-                Debug.Log($"{other.gameObject.name} 히트");
                 if (other.gameObject.CompareTag("Enemy"))
                 {
                     other.gameObject.GetComponent<Enemy>().HitDamage(Damage);
