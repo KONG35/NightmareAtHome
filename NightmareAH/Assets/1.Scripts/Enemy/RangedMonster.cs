@@ -15,7 +15,7 @@ public class RangedMonster: baseMonster
     public void Init(RangedMonster m)
     {
         this.MonsterID = m.MonsterID;
-        this.Name = m.name;
+        this.Name = m.Name;
         this.AttackType = m.AttackType;
         this.MaxHp = m.MaxHp;
         this.CurHp = m.MaxHp;

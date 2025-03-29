@@ -25,7 +25,7 @@ public class PlayerCharacter : MonoBehaviour
         if (Weapons == null)
             Weapons = new List<baseWeapon>();
 
-        Weapons.Add(new FireBallWeapon(TestProjectObj, this,8, 5, 1, 0, 1, 40, 0.5f)); 
+        Weapons.Add(new FireBallWeapon(TestProjectObj, this, 8, 5, 1, 0, 1, 40, 0.5f));
     }
 
 

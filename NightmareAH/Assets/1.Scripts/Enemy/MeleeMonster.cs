@@ -11,7 +11,7 @@ public class MeleeMonster: baseMonster
     public void Init(MeleeMonster m)
     {
         this.MonsterID = m.MonsterID;
-        this.Name = m.name;
+        this.Name = m.Name;
         this.AttackType = m.AttackType;
         this.MaxHp = m.MaxHp;
         this.CurHp = m.MaxHp;

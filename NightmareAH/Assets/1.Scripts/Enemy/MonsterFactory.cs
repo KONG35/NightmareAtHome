@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -69,17 +70,37 @@ public class MonsterFactory : MonoBehaviour
         }
     }
     // 팩토리 메서드: 요청된 몬스터 타입에 따라 오브젝트 풀에서 오브젝트를 가져옵니다.
-    public baseMonster CreateMonster(string _id)
+    public void CreateMonster(Spawn _data)
     {
-        switch (_id)
+        switch (_data.id)
         {
             case "m01":
-                return meleePool.GetObject();
+                {
+                    for (int i=0;i< _data.count; i++)
+                    {
+                        var obj = meleePool.GetObject();
+                        float angle = Random.Range(0f, 2f * Mathf.PI);
+                        float distance = Random.Range(_data.innerRadius, _data.outerRadius);
+                        obj.transform.position = new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0f);
+                    }
+                        break;
+                }
             case "r01":
-                return rangePool.GetObject();
+                {
+                    for (int i = 0; i < _data.count; i++)
+                    {
+                        var obj = rangePool.GetObject();
+                        float angle = Random.Range(0f, 2f * Mathf.PI);
+                        float distance = Random.Range(_data.innerRadius, _data.outerRadius);
+                        obj.transform.position = new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0f);
+                    }
+                    break;
+                }
+
             default:
-                return null;
+                break;
         }
+
     }
 }
 
