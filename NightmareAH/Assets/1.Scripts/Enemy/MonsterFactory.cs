@@ -1,107 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class MonsterFactory : MonoBehaviour
 {
-    // Inspector에 할당할 프리팹 (PooledObject를 상속받은 몬스터 프리팹)
+    // Inspector에 각 몬스터 prefab을 할당합니다.
     public M01MeleeMonster M01MeleePrefab;
+    public M02MeleeMonster M02MeleePrefab;
     public R01RangedMonster R01RangedPrefab;
-
-    // 각 몬스터 타입별 풀
-    private ObjectPool<MeleeMonster> meleePool;
-    private ObjectPool<RangedMonster> rangePool;
-
     public int initialPoolSize = 50;
 
-    private List<MeleeMonsterData> meleeDataList;
-    private List<RangedMonsterData> rangedDataList;
-
+    private ObjectPool<M01MeleeMonster> m01MeleePool;
+    private ObjectPool<R01RangedMonster> r01RangedPool;
 
     public void Init()
     {
-        meleeDataList = new List<MeleeMonsterData>();
-        rangedDataList = new List<RangedMonsterData>();
-
-        meleeDataList = GoogleSheetLoader.Instance.GetDataList<MeleeMonsterData>();
-        rangedDataList = GoogleSheetLoader.Instance.GetDataList<RangedMonsterData>();
-
-        foreach(var d in meleeDataList)
-        {
-            if (d.Key == "m01")
-            {
-                M01MeleePrefab.Init(d.monster);
-            }
-        }
-        foreach(var d in rangedDataList)
-        {
-            if (d.Key == "r01")
-            {
-                //R01RangedPrefab = new R01RangedMonster(d.monster);
-                R01RangedPrefab.Init(d.monster);
-            }
-        }
-
-        // initialPoolSize 만큼 미리 만들어둠
-        if (M01MeleePrefab != null)
-        {
-            meleePool = new ObjectPool<MeleeMonster>(M01MeleePrefab, initialPoolSize, transform);
-        }
-        if (R01RangedPrefab != null)
-        {
-            rangePool = new ObjectPool<RangedMonster>(R01RangedPrefab, initialPoolSize, transform);
-        }
+        m01MeleePool = new ObjectPool<M01MeleeMonster>(M01MeleePrefab, initialPoolSize, transform);
+        r01RangedPool = new ObjectPool<R01RangedMonster>(R01RangedPrefab, initialPoolSize, transform);
     }
-    // 팩토리 메서드: 요청된 몬스터 타입에 따라 오브젝트 풀에서 오브젝트를 가져옵니다.
-    public baseMonster CreateMonster(MonsterAttackType type)
+
+    // Spawn 데이터의 id에 따라 해당 풀에서 몬스터를 꺼내고, 도넛 모양의 영역 내에 위치시킵니다.
+    public void CreateMonster(Spawn spawnData)
     {
-        switch (type)
-        {
-            case MonsterAttackType.Melee:
-                return meleePool.GetObject();
-            case MonsterAttackType.Range:
-                return rangePool.GetObject();
-            default:
-                return null;
-        }
-    }
-    // 팩토리 메서드: 요청된 몬스터 타입에 따라 오브젝트 풀에서 오브젝트를 가져옵니다.
-    public void CreateMonster(Spawn _data)
-    {
-        switch (_data.id)
+        switch (spawnData.id)
         {
             case "m01":
+                for (int i = 0; i < spawnData.count; i++)
                 {
-                    for (int i=0;i< _data.count; i++)
-                    {
-                        var obj = meleePool.GetObject();
-                        float angle = Random.Range(0f, 2f * Mathf.PI);
-                        float distance = Random.Range(_data.innerRadius, _data.outerRadius);
-                        obj.transform.position = new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0f);
-                    }
-                        break;
+                    var monster = m01MeleePool.GetObject();
+                    PositionMonster(monster.transform, spawnData.innerRadius, spawnData.outerRadius);
                 }
+                break;
             case "r01":
+                for (int i = 0; i < spawnData.count; i++)
                 {
-                    for (int i = 0; i < _data.count; i++)
-                    {
-                        var obj = rangePool.GetObject();
-                        float angle = Random.Range(0f, 2f * Mathf.PI);
-                        float distance = Random.Range(_data.innerRadius, _data.outerRadius);
-                        obj.transform.position = new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0f);
-                    }
-                    break;
+                    var monster = r01RangedPool.GetObject();
+                    PositionMonster(monster.transform, spawnData.innerRadius, spawnData.outerRadius);
                 }
-
+                break;
             default:
+                Debug.LogWarning("Unknown spawn id: " + spawnData.id);
                 break;
         }
+    }
 
+    // 도넛 모양 영역(내부 반경 ~ 외부 반경)에 위치를 랜덤하게 지정하는 함수
+    private void PositionMonster(Transform t, float innerRadius, float outerRadius)
+    {
+        float angle = Random.Range(0f, 2f * Mathf.PI);
+        float distance = Random.Range(innerRadius, outerRadius);
+        t.position = new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0f);
+    }
+
+    // 반환 메서드 (사용 후 풀로 돌려보낼 때)
+    public void ReturnMonster(baseMonster monster)
+    {
+        if (monster is M01MeleeMonster m01)
+            m01MeleePool.ReturnObject(m01);
+        else if (monster is R01RangedMonster r01)
+            r01RangedPool.ReturnObject(r01);
     }
 }
-
-

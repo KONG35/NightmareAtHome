@@ -26,18 +26,9 @@ public class SpawnManager : MonoBehaviour
     public MonsterFactory monsterFactory;
 
 
-    [SerializeField]
-    private float nowTime;
     private List<SpawnData> spawnList;
     private void Start()
     {
-        //spawnList = new List<Spawn>();
-
-        //var sData = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
-        //for(int i = 0; i < sData.Count; i++)
-        //{
-        //    spawnList.Add(sData[i].spawn);
-        //}
         spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
         monsterFactory.Init();
     }
@@ -46,7 +37,6 @@ public class SpawnManager : MonoBehaviour
     private void SpawnStartEdit()
     {
         // 구글시트에서 받아온대로 spawn
-        nowTime = 0f;
         StartCoroutine(CreateMonsterCor());
 
     }
@@ -57,8 +47,6 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(spawnList[i].spawn.spawnTime);
 
             monsterFactory.CreateMonster(spawnList[i].spawn);
-            //baseMonster meleeMonster = monsterFactory.CreateMonster(spawnList[i].id);
-            //meleeMonster.transform.position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
         }
         yield return null;
 
