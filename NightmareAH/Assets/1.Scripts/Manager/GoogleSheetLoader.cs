@@ -17,9 +17,9 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
     private Dictionary<Type, IList> dataLists = new Dictionary<Type, IList>();
     private Dictionary<Type, string> csvURLs = new Dictionary<Type, string>
     {
-        { typeof(MeleeMonsterData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv" },
+        { typeof(MeleeMonsterData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=0" },
 
-        { typeof(RangedMonsterData), "https://docs.google.com/spreadsheets/d/1og8W2n2DQH-9eDmGPH3RrWcke1QVMzgbbc55zMF0Zxc/export?format=csv" },
+        { typeof(RangedMonsterData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=329945714" },
 
         { typeof(UITextData), "https://docs.google.com/spreadsheets/d/1RjkftiogaK7GntjrjCewm6LGFnENen4OtD5HlONh6zU/export?format=csv" },
 
