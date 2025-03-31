@@ -34,10 +34,15 @@ public class SpawnManager : MonoBehaviour
     }
 
     [Button]
-    private void SpawnStartEdit()
+    private void InitEdit()
     {
+
         spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
         monsterFactory.Init();
+    }
+    [Button]
+    private void SpawnStartEdit()
+    {
         // 구글시트에서 받아온대로 spawn
         StartCoroutine(CreateMonsterCor());
 

@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
-  m_Color: {r: 0.96815324, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.67668825, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3a3540b5e176a4da241bdbb51370f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterID: 
+  MonsterID: m02
   Name: 
   AttackType: 0
   MaxHp: 0

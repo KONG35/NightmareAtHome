@@ -4,8 +4,9 @@ using UnityEngine;
 public class MonsterFactory : MonoBehaviour
 {
     // Inspector에 여러 종류의 Melee 및 Ranged 몬스터 prefab을 할당합니다.
-    public List<MeleeMonster> meleePrefabs;  // 예: M01MeleePrefab, M02MeleePrefab 등
-    public List<RangedMonster> rangedPrefabs; // 예: R01RangedPrefab 등
+    //public List<MeleeMonster> meleePrefabs;  // 예: M01MeleePrefab, M02MeleePrefab 등
+    public MeleeMonster[] meleePrefabs;  // 예: M01MeleePrefab, M02MeleePrefab 등
+    public RangedMonster[] rangedPrefabs; // 예: R01RangedPrefab 등
     public int initialPoolSize = 50;
 
     // 그룹별 풀: 하나의 Melee 풀, 하나의 Ranged 풀로 관리
@@ -14,8 +15,29 @@ public class MonsterFactory : MonoBehaviour
 
     public void Init()
     {
+        // 몬스터 데이터 초기화 
+        var meleeData = GoogleSheetLoader.Instance.GetDataList<MeleeMonsterData>();
+        var rangeData = GoogleSheetLoader.Instance.GetDataList<RangedMonsterData>();
+
+        for (int i = 0; i < meleePrefabs.Length; i++)
+        {
+            var m = meleeData.Find(x => x.monster.MonsterID == meleePrefabs[i].MonsterID);
+            if(m != null)
+            {
+                meleePrefabs[i].Init(m.monster);
+            }
+        }
+        for (int i = 0; i < rangedPrefabs.Length; i++)
+        {
+            var m = rangeData.Find(x => x.monster.MonsterID == rangedPrefabs[i].MonsterID);
+            if (m != null)
+            {
+                rangedPrefabs[i].Init(m.monster);
+            }
+        }
+
         // 풀 생성 시 기본 prefab은 아무거나 사용합니다.
-        if (meleePrefabs.Count > 0)
+        if (meleePrefabs.Length > 0)
         {
             meleePool = new ObjectPool<MeleeMonster>(meleePrefabs[0], 0, transform);
             // 각 Melee prefab에 대해 initialPoolSize 만큼 생성하여 풀에 추가
@@ -30,7 +52,7 @@ public class MonsterFactory : MonoBehaviour
             }
         }
 
-        if (rangedPrefabs.Count > 0)
+        if (rangedPrefabs.Length > 0)
         {
             rangedPool = new ObjectPool<RangedMonster>(rangedPrefabs[0], 0, transform);
             foreach (RangedMonster prefab in rangedPrefabs)
