@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,18 +13,12 @@ public enum MonsterState
     None=0,
     Chase,
     Attack,
-    Hit,
+    Knock,
     Dead
 }
-public interface IBaseMonster
-{
-    void Chase();
-    void Attack();
-    void Hit(float dmg);
-    void Dead();
-}
 
-public class baseMonster : MonoBehaviour, IBaseMonster, IPoolable
+[Serializable]
+public class baseMonster
 {
     public string MonsterID;
     public string Name;
@@ -33,11 +28,10 @@ public class baseMonster : MonoBehaviour, IBaseMonster, IPoolable
     public float AttackDamage;
     public float Speed;
     public float Frequency;
-    public bool isDie;
+    public float AttackRange;
+    public int Exp;
 
-    public Transform target;
-
-    protected baseMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency)
+    protected baseMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency, float _attackRange, int _exp)
     {
         this.MonsterID = _monsterID;
         this.Name = _name;
@@ -47,49 +41,20 @@ public class baseMonster : MonoBehaviour, IBaseMonster, IPoolable
         this.AttackDamage = _attackDmg;
         this.Speed = _speed;
         this.Frequency = _frequency;
-        this.isDie = false;
-        this.target = null;
+        this.AttackRange = _attackRange;
+        this.Exp = _exp;
     }
-
-    // 오브젝트가 풀에서 꺼내질 때 호출됨
-    public virtual void OnSpawn()
+    public baseMonster(baseMonster m)
     {
-        // !수정하기
-        if(target==null)
-            target = FindObjectOfType<PlayerCharacter>().transform;
-
-        gameObject.SetActive(true);
-    }
-    // 오브젝트가 풀로 반환될 때 호출됨
-    public virtual void OnDespawn()
-    {
-        gameObject.SetActive(false);
-    }
-    public virtual void Update()
-    {
-        if (target == null)
-            return;
-
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * Speed);
-
-        if (CurHp <= 0)
-        {
-            Dead();
-        }
-
-    }
-    public virtual void Chase()
-    {
-    }
-
-    public virtual void Attack()
-    {
-    }
-
-    public virtual void Hit(float dmg)
-    {
-    }
-    public virtual void Dead()
-    {
+        this.MonsterID = m.MonsterID;
+        this.Name = m.Name;
+        this.AttackType = m.AttackType;
+        this.MaxHp = m.MaxHp;
+        this.CurHp = m.MaxHp;
+        this.AttackDamage = m.AttackDamage;
+        this.Speed = m.Speed;
+        this.Frequency = m.Frequency;
+        this.AttackRange = m.AttackRange;
+        this.Exp = m.Exp;
     }
 }

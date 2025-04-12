@@ -17,13 +17,13 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
     private Dictionary<Type, IList> dataLists = new Dictionary<Type, IList>();
     private Dictionary<Type, string> csvURLs = new Dictionary<Type, string>
     {
-        { typeof(MeleeMonsterData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=0" },
+        { typeof(MeleeMonsterSheetData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=0" },
 
-        { typeof(RangedMonsterData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=329945714" },
+        { typeof(RangedMonsterSheetData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=329945714" },
 
         { typeof(UITextData), "https://docs.google.com/spreadsheets/d/1RjkftiogaK7GntjrjCewm6LGFnENen4OtD5HlONh6zU/export?format=csv" },
 
-        { typeof(SpawnData), "https://docs.google.com/spreadsheets/d/1GqshUUmytuzuYEAQSN5xL01d12lAFUoWeq2Ac3DhKkY/export?format=csv" }
+        { typeof(SpawnSheetData), "https://docs.google.com/spreadsheets/d/1GqshUUmytuzuYEAQSN5xL01d12lAFUoWeq2Ac3DhKkY/export?format=csv" }
     };
 
     private void Start()

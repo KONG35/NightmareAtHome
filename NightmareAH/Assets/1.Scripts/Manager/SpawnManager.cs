@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
     public MonsterFactory monsterFactory;
 
 
-    private List<SpawnData> spawnList;
+    private List<SpawnSheetData> spawnList;
     private void Start()
     {
         //    spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
     private void InitEdit()
     {
 
-        spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
+        spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnSheetData>();
         monsterFactory.Init();
     }
     [Button]

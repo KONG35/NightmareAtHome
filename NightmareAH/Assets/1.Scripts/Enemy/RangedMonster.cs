@@ -1,18 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[Serializable]
 public class RangedMonster: baseMonster
 {
     public int PierceCount;
-    [SerializeField] 
-    private GameObject bulletPrefab;
 
-    public RangedMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency, int _pierceCount) :base(_monsterID, _name, _attackType, _maxHp, _attackDmg, _speed, _frequency)
+    public RangedMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency, int _pierceCount, float _attackRange, int _exp) :base(_monsterID, _name, _attackType, _maxHp, _attackDmg, _speed, _frequency, _attackRange, _exp)
     {
         PierceCount = _pierceCount;
     }
-    public void Init(RangedMonster m)
+    public RangedMonster(RangedMonster m) : base(m)
     {
         this.MonsterID = m.MonsterID;
         this.Name = m.Name;
@@ -23,6 +22,7 @@ public class RangedMonster: baseMonster
         this.Speed = m.Speed;
         this.Frequency = m.Frequency;
         this.PierceCount = m.PierceCount;
-        this.isDie = false;
+        this.AttackRange = m.AttackRange;
+        this.Exp = m.Exp;
     }
 }

@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class M01MeleeMonster : MeleeMonster
+public class M01MeleeMonster : MonsterEntity
 {
-    public M01MeleeMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency) : base(_monsterID, _name, _attackType, _maxHp, _attackDmg, _speed, _frequency)
-    {
-    }
+    public MeleeMonster meleeData => (MeleeMonster)this.monster;
     override public void Update()
     {
         base.Update();
+
+    }
+    override public void AttackInit()
+    {
+        base.AttackInit();
 
     }
 }

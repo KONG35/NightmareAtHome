@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M02MeleeMonster : MeleeMonster
+public class M02MeleeMonster : MonsterEntity
 {
-    public M02MeleeMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency) : base(_monsterID, _name, _attackType, _maxHp, _attackDmg, _speed, _frequency)
-    {
-    }
+    public MeleeMonster meleeData => (MeleeMonster)this.monster;
+
     override public void Update()
     {
         base.Update();

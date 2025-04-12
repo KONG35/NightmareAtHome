@@ -6,36 +6,36 @@ public interface IBaseSheetData
 {
     void Parse(string[] values); // 각 데이터 클래스마다 구현
 }
-public class MeleeMonsterData : IBaseSheetData
+public class MeleeMonsterSheetData : IBaseSheetData
 {
     public string Key { get; private set; }
-    public MeleeMonster monster = new MeleeMonster("0","0",0,0,0,0,0);
+    public MeleeMonster monster;
 
     public void Parse(string[] values)
     {
-        if (values.Length < 6) return;
+        //if (values.Length < 6) return;
 
         Key = values[0];
-        monster = new MeleeMonster(values[0], values[1], MonsterAttackType.Melee, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]));
+        monster = new MeleeMonster(values[0], values[1], MonsterAttackType.Melee, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]), int.Parse(values[7]));
 
     }
 }
-public class RangedMonsterData : IBaseSheetData
+public class RangedMonsterSheetData : IBaseSheetData
 {
     public string Key { get; private set; }
-    public RangedMonster monster = new RangedMonster("0", "0", 0, 0, 0, 0, 0, 0);
+    public RangedMonster monster;
 
     public void Parse(string[] values)
     {
-        if (values.Length < 7) return;
+        //if (values.Length < 7) return;
 
         Key = values[0];
-        monster = new RangedMonster(values[0], values[1], MonsterAttackType.Range, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]),int.Parse(values[6]));
+        monster = new RangedMonster(values[0], values[1], MonsterAttackType.Range, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]),int.Parse(values[6]), float.Parse(values[7]), int.Parse(values[8]));
 
     }
 }
 
-public class SpawnData : IBaseSheetData
+public class SpawnSheetData : IBaseSheetData
 {
     public string Key { get; private set; }
     public Spawn spawn;
