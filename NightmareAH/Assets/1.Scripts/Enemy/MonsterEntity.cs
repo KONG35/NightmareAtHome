@@ -27,9 +27,15 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public MonsterState curState;
     public MonsterState prevState;
     public Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     private Coroutine aniCor;
     private bool isAnimating;
+
+    [Header("정렬 설정")]
+    public float gridSize = 0.1f;         // 그리드 간격
+    public int baseOrder = 1000;          // 기준 정렬 순서
+    public int orderPerLevel = 10;        // 그리드 1칸당 sortingOrder 차이
     private void Awake()
     {
         isDead = false;
@@ -37,7 +43,19 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         curState = MonsterState.None;
         prevState = MonsterState.None;
         aniCor = null;
+
         animator = gameObject.GetComponent<Animator>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    }
+    /// <summary>
+    /// 스폰 Init문
+    /// </summary>
+    protected void Init()
+    {
+        isDead = false;
+        isAnimating = false;
+        curState = MonsterState.Chase;
+        aniCor = null;
     }
     public virtual void Update()
     {
@@ -83,7 +101,18 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         }
 
     }
+    void LateUpdate()
+    {
+        if (target == null)
+            return;
 
+        if (isDead) return;
+
+        float offsetY = transform.position.y - target.position.y;
+        int level = Mathf.FloorToInt(offsetY / gridSize);
+
+        spriteRenderer.sortingOrder = baseOrder - (level * orderPerLevel);
+    }
     public virtual void ChaseUpdate()
     {
         if (IsInAttackRange())
@@ -127,8 +156,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     /// </summary>
     public virtual void OnSpawn()
     {
-        isDead = false;
-        curState = MonsterState.Chase;
+        Init();
 
         // !수정하기
         if (target == null)
@@ -159,8 +187,8 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         aniCor = StartCoroutine(WaitForAnimation(stateName, () =>
         {
             isAnimating = false;
-            aniCor = null;
             curState = MonsterState.Chase;
+            aniCor = null;
         }));
     }
     IEnumerator WaitForAnimation(string stateName, System.Action onEnd)
