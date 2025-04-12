@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
@@ -10,6 +11,9 @@ public class PlayerCharacter : MonoBehaviour
     public LayerMask Enemy;
     public ProjectlieObject TestProjectObj;
     public TestSpawner spawner;
+    public Rigidbody rigid;
+    public Animator anim;
+    public SpriteRenderer myRender;
 
     public void Start()
     {
@@ -18,6 +22,13 @@ public class PlayerCharacter : MonoBehaviour
 
         if (spawner == null)
             spawner = FindObjectOfType<TestSpawner>();
+        if (rigid == null)
+            rigid = gameObject.GetComponent<Rigidbody>();
+        if (anim == null)
+            anim = gameObject.GetComponent<Animator>();
+        if (myRender == null)
+            myRender = gameObject.GetComponent<SpriteRenderer>();
+
     }
     [Button]
     public void AddWeapon()
@@ -33,6 +44,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         foreach (var weapon in Weapons)
             weapon.Action();
+
+        anim.SetFloat("Speed", rigid.velocity.magnitude);
+        if(rigid.velocity.x!=0)
+            myRender.flipX = rigid.velocity.x < 0;
+
     }
     public GameObject FindClosestEnemy(float radius)
     {
