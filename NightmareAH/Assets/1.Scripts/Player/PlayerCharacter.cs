@@ -6,6 +6,24 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public float MaxHp = 100f;
+    private float Hp;
+    public float CurHp
+    {
+        get
+        {
+            return Hp;
+        }
+        set
+        {
+            Hp = value;
+            if (MaxHp < Hp)
+                Hp = MaxHp;
+        }
+    }
+
+    public float CurExp = 0f;
+
 
     public List<baseWeapon> Weapons;
     public LayerMask Enemy;

@@ -21,12 +21,16 @@ public class Spawn
         count = _cnt;
     }
 }
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : Singleton<SpawnManager>
 {
+
     public MonsterFactory monsterFactory;
 
 
     private List<SpawnSheetData> spawnList;
+
+    private ObjectPool<ItemBase> ItemPool;
+
     private void Start()
     {
         //    spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
@@ -63,4 +67,11 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
     }
+
+    public void SpawnExp(ItemBase.eItemType ItemType,float Value,Vector3 SpawnPos)
+    {
+        var Item = ItemPool.GetObject(x => x.Type == ItemType);
+    }
+
+
 }

@@ -33,7 +33,7 @@ public class FireBallWeapon : ProjectlieWeapon
             {
                 if (other.gameObject.CompareTag("Enemy"))
                 {
-                    other.gameObject.GetComponent<Enemy>().HitDamage(Damage);
+                    other.gameObject.GetComponent<MonsterEntity>().Hit(Damage);
                     PierceCount--;
                     if (PierceCount < 0)
                     {
