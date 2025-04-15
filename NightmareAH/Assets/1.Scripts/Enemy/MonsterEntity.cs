@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using UnityEngine;
 
@@ -36,6 +37,9 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public float gridSize = 0.1f;         // 그리드 간격
     public int baseOrder = 1000;          // 기준 정렬 순서
     public int orderPerLevel = 10;        // 그리드 1칸당 sortingOrder 차이
+
+    public float DropExpChance = 0.3f;
+
     private void Awake()
     {
         isDead = false;
@@ -148,6 +152,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
             StopCoroutine(aniCor);
             aniCor = null;
         }
+        DropItem();
         animator.CrossFade("IsDead", 0.05f);
     }
 
@@ -207,5 +212,13 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
         if (!isDead)
             onEnd?.Invoke();
+    }
+
+    private void DropItem()
+    {
+        if(Random.Range(0f,1f)< DropExpChance)
+        {
+            SpawnManager.Instance.SpawnExp(this.monster.Exp, this.transform.position);
+        }
     }
 }

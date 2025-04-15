@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,15 +8,16 @@ using UnityEngine.UI;
 
 public class SkillPickItemUI : MonoBehaviour
 {
+    public Button btn;
     public Image SkillImage;
     public TextMeshProUGUI ExText;
     public Image Star;
     public List<Image> LvImage;
 
 
-
-    public void InitItem(Sprite SkillImage, string Ex,int CurLv,int MaxLv)
+    public void InitItem(Sprite SkillImage, string Ex,int CurLv,int MaxLv,Action btnAction)
     {
+
         this.SkillImage.sprite = SkillImage;
         ExText.text = Ex;
 
@@ -35,6 +37,11 @@ public class SkillPickItemUI : MonoBehaviour
         {
             LvImage[i].color = Color.white;
         }
+
+        if (btn == null)
+            btn = this.GetComponent<Button>();
+        btn.onClick.AddListener(()=>btnAction.Invoke());
+
         StartCoroutine(StarAnim(LvImage[CurLv]));
     }
 
@@ -54,6 +61,6 @@ public class SkillPickItemUI : MonoBehaviour
     [Button]
     public void TestButton()
     {
-        InitItem(null, "테스트 인데용", 0, 5);
+        InitItem(null, "테스트 인데용", 0, 5 , null);
     }
 }

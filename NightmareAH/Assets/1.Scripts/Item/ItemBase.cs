@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public abstract class ItemBase : MonoBehaviour ,IPoolable
 {
@@ -22,7 +24,25 @@ public abstract class ItemBase : MonoBehaviour ,IPoolable
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Action(other.gameObject.GetComponent<PlayerCharacter>());
+            StartCoroutine(Magnet(other));
+        }
+    }
+
+    IEnumerator Magnet(Collider other)
+    {
+        while (true)
+        {
+            float distance = Vector3.Distance(other.transform.position, this.transform.position);
+            if (distance < 0.5f)
+            {
+                Action(other.gameObject.GetComponent<PlayerCharacter>());
+                SpawnManager.Instance.DespawnItem(this);
+            }
+            else
+            {
+                this.transform.position = Vector3.MoveTowards(transform.position, other.transform.position, Time.deltaTime * distance);
+            }
+            yield return new WaitForEndOfFrame();
         }
     }
 

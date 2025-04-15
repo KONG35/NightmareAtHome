@@ -18,4 +18,9 @@ public class HpItem : ItemBase
     {
         AddValue = 30f;
     }
+
+    public override void SetValue(float v)
+    {
+        AddValue = v;
+    }
 }

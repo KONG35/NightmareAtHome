@@ -1,10 +1,12 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : Singleton<PlayerCharacter>
 {
     public float MaxHp = 100f;
     private float Hp;
@@ -21,8 +23,28 @@ public class PlayerCharacter : MonoBehaviour
                 Hp = MaxHp;
         }
     }
-
-    public float CurExp = 0f;
+    public int Lv = 0;
+    public float[] ExpLvTable = { 10,20,30,40,50,60,70,80};
+    private float Exp = 0;
+    public float CurExp
+    {
+        get
+        {
+            return Exp;
+        }
+        set
+        {
+            Exp += value;
+            if (InGameUI.Instance)
+                InGameUI.Instance.ExpGaugeUI.SetBar(Exp, ExpLvTable[Lv]);
+            if (ExpLvTable[Lv]<Exp&& InGameUI.Instance)
+            {
+                InGameUI.Instance.SkillPickUI.SetItems();
+                InGameUI.Instance.SkillPickUI.gameObject.SetActive(true);
+            }
+        }
+    }
+    public float CurGold = 0f;
 
 
     public List<baseWeapon> Weapons;
@@ -32,6 +54,9 @@ public class PlayerCharacter : MonoBehaviour
     public Rigidbody rigid;
     public Animator anim;
     public SpriteRenderer myRender;
+
+
+    public List<WeaponData> weaponList;
 
     public void Start()
     {
@@ -46,17 +71,30 @@ public class PlayerCharacter : MonoBehaviour
             anim = gameObject.GetComponent<Animator>();
         if (myRender == null)
             myRender = gameObject.GetComponent<SpriteRenderer>();
-
     }
     [Button]
-    public void AddWeapon()
+    public void KitchenKnifeWeaponAddWeapon()
     {
         if (Weapons == null)
             Weapons = new List<baseWeapon>();
-
-        Weapons.Add(new FireBallWeapon(TestProjectObj, this, 8, 5, 1, 0, 1, 40, 0.5f));
+        var weapon = new KitchenKnifeWeapon(TestProjectObj, 8, 5, 1, 0, 1, 40, 0.5f, 5,DataTableManager.Instance.weaponIconList.Find(x => x.name == "Kitchenknife"));
+        weapon.EquipWeapon(this);
+        Weapons.Add(weapon);
     }
-
+    public void AddWeapon(baseWeapon weapon)
+    {
+        if (Weapons == null)
+            Weapons = new List<baseWeapon>();
+        if (Weapons.Exists(x => x == weapon))
+        {
+            weapon.LvUp();
+        }
+        else
+        {
+            weapon.EquipWeapon(this);
+            Weapons.Add(weapon);
+        }
+    }
 
     public void Update()
     {

@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Golditem : ItemBase
 {
+    float addGold;
     public override void Action(PlayerCharacter other)
     {
-        throw new System.NotImplementedException();
+        other.CurGold += addGold;
+    }
+
+    public override void SetValue(float v)
+    {
+        addGold = v;
     }
 
     private void Awake()
@@ -14,9 +20,4 @@ public class Golditem : ItemBase
         Type = eItemType.Gold;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

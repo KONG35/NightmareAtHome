@@ -14,7 +14,7 @@ public class ExpItem : ItemBase
     {
         Type = eItemType.Exp;
     }
-    public abstract void SetValue(float v)
+    public override void SetValue(float v)
     {
         ExpValue = v;
     }

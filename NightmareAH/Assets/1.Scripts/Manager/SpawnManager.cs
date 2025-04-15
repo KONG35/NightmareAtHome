@@ -30,11 +30,13 @@ public class SpawnManager : Singleton<SpawnManager>
     private List<SpawnSheetData> spawnList;
 
     private ObjectPool<ItemBase> ItemPool;
+    public List<ItemBase> ItemPrefabList;
 
     private void Start()
     {
         //    spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
         //    monsterFactory.Init();
+        ItemPool = new ObjectPool<ItemBase>(ItemPrefabList[0],100,this.transform);
     }
 
     [Button]
@@ -68,10 +70,25 @@ public class SpawnManager : Singleton<SpawnManager>
         yield return new WaitForSeconds(delay);
     }
 
-    public void SpawnExp(ItemBase.eItemType ItemType,float Value,Vector3 SpawnPos)
+    public void SpawnExp(float Value,Vector3 SpawnPos)
     {
-        var Item = ItemPool.GetObject(x => x.Type == ItemType);
+        var Item = ItemPool.GetObject(x => x.Type == ItemBase.eItemType.Exp);
+        Item.SetValue(Value);
+        Item.transform.position = SpawnPos;
+    } 
+    [Button]
+
+    public void SpawnExpbtn()
+    {
+        var Item = ItemPool.GetObject(x => x.Type == ItemBase.eItemType.Exp);
+        Item.SetValue(1);
+        Item.transform.position = this.transform.position;
+
     }
 
+    public void DespawnItem(ItemBase item)
+    {
+        ItemPool.ReturnObject(item);
+    }
 
 }
