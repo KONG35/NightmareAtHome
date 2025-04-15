@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
 {
-
+    private const string SHEETURL = "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=";
     protected override void Awake()
     {
         base.Awake();
@@ -17,13 +17,13 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
     private Dictionary<Type, IList> dataLists = new Dictionary<Type, IList>();
     private Dictionary<Type, string> csvURLs = new Dictionary<Type, string>
     {
-        { typeof(MeleeMonsterSheetData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=0" },
+        { typeof(MeleeMonsterSheetData), SHEETURL+"0" },
 
-        { typeof(RangedMonsterSheetData), "https://docs.google.com/spreadsheets/d/1ezhz3PkzM-KgIL1tFaIYw-yYjWiFmQpQnu1YuaTkTBQ/export?format=csv&gid=329945714" },
+        { typeof(RangedMonsterSheetData), SHEETURL+"329945714" },
 
-        { typeof(UITextData), "https://docs.google.com/spreadsheets/d/1RjkftiogaK7GntjrjCewm6LGFnENen4OtD5HlONh6zU/export?format=csv" },
+        { typeof(UITextData), SHEETURL+"938497610" },
 
-        { typeof(SpawnSheetData), "https://docs.google.com/spreadsheets/d/1GqshUUmytuzuYEAQSN5xL01d12lAFUoWeq2Ac3DhKkY/export?format=csv" }
+        { typeof(SpawnSheetData), SHEETURL+"1593328088" }
     };
 
     private void Start()
