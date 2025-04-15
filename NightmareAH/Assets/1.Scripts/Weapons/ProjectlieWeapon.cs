@@ -16,7 +16,7 @@ public class ProjectlieWeapon : baseWeapon
     /// <param name="piercePer">관통 데미지 변경 퍼센트</param>
     /// <param name="Damage">데미지</param>
     /// <param name="frequency">빈도수</param>
-    public ProjectlieWeapon(float MaxRange, float MinRange ,float speed , int pierceCount, float piercePer, float Damage, float frequency) : base(Damage, frequency)
+    public ProjectlieWeapon(float MaxRange, float MinRange ,float speed , int pierceCount, float piercePer, float Damage, float frequency,int MaxLv, DataTableManager.WeaponIconData icon) : base(Damage, frequency,MaxLv,icon)
     {
         this.MaxRange = MaxRange;
         this.MinRange = MinRange;
@@ -28,5 +28,8 @@ public class ProjectlieWeapon : baseWeapon
     public override void Action()
     {
 
+    }
+    public override void LvUp()
+    {
     }
 }

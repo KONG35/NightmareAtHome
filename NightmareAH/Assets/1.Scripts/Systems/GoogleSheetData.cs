@@ -48,7 +48,50 @@ public class SpawnSheetData : IBaseSheetData
         spawn = new Spawn(int.Parse(values[0]), values[1], float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), int.Parse(values[5]));
 
     }
+}
+public class WeaponData : IBaseSheetData
+{
+    public string key { get; private set; }
+    public baseWeapon Weapon;
+    /// <summary>
+    /// 0 index     인덱스
+    /// 1 type      무기타입
+    /// 2 name      무기이름
+    /// 3 damage    데미지
+    /// 4 frequency 무기 사용빈도
+    /// 5 minrenge  무기 발사,공격 가능 최소범위
+    /// 6 maxrange  무기 발사,공격 가능 최대범위
+    /// 7 speed     무기 투사체의 속도
+    /// 8 pierceCount 관통 카운트
+    /// 9 piercePer   관통시 데미지감소율
+    /// 10 scale    무기 범위 크기
+    /// </summary>
+    /// <param name="values"></param>
+    public void Parse(string[] values)
+    {
+        switch((eWeaponIndex)int.Parse(values[0]))
+        {
+            case eWeaponIndex.Flapper:
+                Weapon = new MeleeWeapon(float.Parse(values[6]), float.Parse(values[3]), 
+                    float.Parse(values[3]), float.Parse(values[10]), int.Parse(values[12]),DataTableManager.Instance.weaponIconList.Find(x => x.name == values[11]));
 
+                break;
+            case eWeaponIndex.Kitchenknife:
+                Weapon = new KitchenKnifeWeapon(DataTableManager.Instance.ProjectlieList.Find(x=>x.name=="Kitchenknife").Obj,float.Parse(values[6]), float.Parse(values[5]), 
+                    float.Parse(values[7]), int.Parse(values[8]), float.Parse(values[9]), float.Parse(values[3]), float.Parse(values[4]), int.Parse(values[12]), DataTableManager.Instance.weaponIconList.Find(x => x.name == values[11]));
+                break;
+            case eWeaponIndex.Can:
+                break;
+        }
+    }
+
+
+    enum eWeaponIndex
+    {
+        Flapper,
+        Kitchenknife,
+        Can,
+    }
 }
 public enum LanguageType
 {

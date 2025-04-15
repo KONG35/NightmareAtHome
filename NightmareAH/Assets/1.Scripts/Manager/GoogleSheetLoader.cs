@@ -23,8 +23,13 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
 
         { typeof(UITextData), SHEETURL+"938497610" },
 
-        { typeof(SpawnSheetData), SHEETURL+"1593328088" }
+        { typeof(SpawnSheetData), SHEETURL+"1593328088" },
+
+        { typeof(WeaponData), SHEETURL+"1842892579" },
+
     };
+
+    public bool isInit = false;
 
     private void Start()
     {
@@ -54,6 +59,7 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
                 Debug.LogWarning($"{dataType.Name}은(는) IBaseSheetData를 구현하지 않습니다.");
             }
         }
+        isInit = true;
     }
 
     private IEnumerator LoadCSV<T>(Type type, string url) where T : IBaseSheetData, new()
