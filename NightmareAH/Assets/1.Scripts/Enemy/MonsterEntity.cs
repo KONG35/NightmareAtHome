@@ -28,6 +28,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public MonsterState prevState;
     public Animator animator;
     private SpriteRenderer spriteRenderer;
+    private Rigidbody rigid;
 
     private Coroutine aniCor;
     private bool isAnimating;
@@ -44,6 +45,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         prevState = MonsterState.None;
         aniCor = null;
 
+        rigid = gameObject.GetComponent<Rigidbody>();
         animator = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
@@ -107,11 +109,13 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
             return;
 
         if (isDead) return;
-
         float offsetY = transform.position.y - target.position.y;
         int level = Mathf.FloorToInt(offsetY / gridSize);
 
         spriteRenderer.sortingOrder = baseOrder - (level * orderPerLevel);
+
+        float offsetX = transform.position.x - target.position.x;
+        spriteRenderer.flipX = (offsetX >= 0);
     }
     public virtual void ChaseUpdate()
     {
