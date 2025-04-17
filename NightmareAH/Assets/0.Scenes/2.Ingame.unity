@@ -1100,7 +1100,7 @@ Transform:
   m_GameObject: {fileID: 288659014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.0815108, y: 2.43416, z: -2.9705987}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4008,6 +4008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPrefabs:
   - {fileID: 2211505335901467450, guid: 5c4447a1c9cfd73498afa3a85aecf57c, type: 3}
+  - {fileID: 5905081155328846582, guid: 08f5ef2871533544f872d82d52de4c74, type: 3}
   initialPoolSize: 50
 --- !u!4 &1036032906
 Transform:
@@ -4736,6 +4737,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1268791539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1268791541}
+  - component: {fileID: 1268791540}
+  m_Layer: 0
+  m_Name: AnimationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1268791540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268791539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ac7f9727239d345971d3c6ac7a085d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterAnimCtlr: {fileID: 22100000, guid: 5637c2477f114a74ab5513447c6b6e54, type: 2}
+--- !u!4 &1268791541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268791539}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1356441524
 GameObject:
   m_ObjectHideFlags: 0
@@ -7914,3 +7960,4 @@ SceneRoots:
   - {fileID: 2001517671409990235}
   - {fileID: 41151564}
   - {fileID: 288659016}
+  - {fileID: 1268791541}
