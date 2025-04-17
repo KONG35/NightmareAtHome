@@ -81,7 +81,7 @@ public class SpawnManager : Singleton<SpawnManager>
     public void SpawnExpbtn()
     {
         var Item = ItemPool.GetObject(x => x.Type == ItemBase.eItemType.Exp);
-        Item.SetValue(1);
+        Item.SetValue(10);
         Item.transform.position = this.transform.position;
 
     }

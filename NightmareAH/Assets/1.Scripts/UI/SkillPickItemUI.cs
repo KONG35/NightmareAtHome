@@ -2,7 +2,9 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +15,12 @@ public class SkillPickItemUI : MonoBehaviour
     public TextMeshProUGUI ExText;
     public Image Star;
     public List<Image> LvImage;
-
+    public int CurLv;
+    float time = 0.0f;
 
     public void InitItem(Sprite SkillImage, string Ex,int CurLv,int MaxLv,Action btnAction)
     {
-
+        time = 0.0f;
         this.SkillImage.sprite = SkillImage;
         ExText.text = Ex;
 
@@ -40,14 +43,21 @@ public class SkillPickItemUI : MonoBehaviour
 
         if (btn == null)
             btn = this.GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(()=>btnAction.Invoke());
 
-        StartCoroutine(StarAnim(LvImage[CurLv]));
+        //StartCoroutine(StarAnim(LvImage[CurLv]));
+        this.CurLv = CurLv;
+    }
+    private void Update()
+    {
+        time += Time.deltaTime;
+        Mathf.PingPong(time, 1f);
+        LvImage[CurLv].color = Color.Lerp(Color.white, Color.black, Mathf.PingPong(time, 1f));
     }
 
     IEnumerator StarAnim(Image Cur)
     {
-        float time = 0.0f;
         while(true)
         {
             time += Time.deltaTime;

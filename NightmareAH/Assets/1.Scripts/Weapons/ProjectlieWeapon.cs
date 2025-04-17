@@ -31,5 +31,6 @@ public class ProjectlieWeapon : baseWeapon
     }
     public override void LvUp()
     {
+        lv++;
     }
 }

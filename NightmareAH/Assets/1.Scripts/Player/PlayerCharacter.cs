@@ -23,7 +23,26 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
                 Hp = MaxHp;
         }
     }
-    public int Lv = 0;
+    private int Lv = 0;
+
+    public int curLv
+    {
+        get
+        {
+            return Lv;
+        }
+    }
+    public void LvUp()
+    {
+        {
+            Lv++;
+            Exp -= ExpLvTable[curLv-1];
+            if (ExpLvTable[curLv] <= Exp)
+                StartCoroutine(DelayLvUp());
+            if (InGameUI.Instance)
+                InGameUI.Instance.ExpGaugeUI.SetBar(Exp, ExpLvTable[curLv]);
+        }
+    }
     public float[] ExpLvTable = { 10,20,30,40,50,60,70,80};
     private float Exp = 0;
     public float CurExp
@@ -34,10 +53,10 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         }
         set
         {
-            Exp += value;
+            Exp = value;
             if (InGameUI.Instance)
-                InGameUI.Instance.ExpGaugeUI.SetBar(Exp, ExpLvTable[Lv]);
-            if (ExpLvTable[Lv]<Exp&& InGameUI.Instance)
+                InGameUI.Instance.ExpGaugeUI.SetBar(Exp, ExpLvTable[curLv]);
+            if (ExpLvTable[curLv]<=Exp&& InGameUI.Instance&&!InGameUI.Instance.SkillPickUI.gameObject.activeSelf)
             {
                 InGameUI.Instance.SkillPickUI.SetItems();
                 InGameUI.Instance.SkillPickUI.gameObject.SetActive(true);
@@ -71,6 +90,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
             anim = gameObject.GetComponent<Animator>();
         if (myRender == null)
             myRender = gameObject.GetComponent<SpriteRenderer>();
+
+        CurExp = 0;
     }
     [Button]
     public void KitchenKnifeWeaponAddWeapon()
@@ -92,6 +113,7 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         else
         {
             weapon.EquipWeapon(this);
+            weapon.lv = 1;
             Weapons.Add(weapon);
         }
     }
@@ -123,5 +145,22 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
             }
         }
         return closest;
+    }
+
+    public void RunCoroutine(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
+    }
+
+
+    IEnumerator DelayLvUp()
+    {
+        while (InGameUI.Instance.SkillPickUI.gameObject.activeSelf)
+            yield return new WaitForEndOfFrame();
+        if (ExpLvTable[curLv] <= Exp && InGameUI.Instance)
+        {
+            InGameUI.Instance.SkillPickUI.SetItems();
+            InGameUI.Instance.SkillPickUI.gameObject.SetActive(true);
+        }
     }
 }

@@ -6,11 +6,12 @@ using UnityEngine;
 public class SkillPickUI : MonoBehaviour
 {
     public SkillPickItemUI[] Items;
-
     public void SetItems()
     {
         var weaponlist = GoogleSheetLoader.Instance.GetDataList<WeaponData>();
-        for(int i=0;i<Items.Length;i++)
+        if (weaponlist.Count == 0)
+            return;
+        for (int i=0;i<Items.Length;i++)
         {
             int index = Random.Range(0,weaponlist.Count);
             if (weaponlist[index].Weapon == null)
@@ -19,7 +20,9 @@ public class SkillPickUI : MonoBehaviour
                 continue;
             }
             Items[i].InitItem(weaponlist[index].Weapon.Icon.Icon, "", weaponlist[index].Weapon.lv, weaponlist[index].Weapon.MaxLv,
-                delegate { PlayerCharacter.Instance.AddWeapon(weaponlist[index].Weapon); this.gameObject.SetActive(false); });
+                delegate { PlayerCharacter.Instance.AddWeapon(weaponlist[index].Weapon); 
+                    this.gameObject.SetActive(false); PlayerCharacter.Instance.LvUp();
+                });
         }
     }
 }

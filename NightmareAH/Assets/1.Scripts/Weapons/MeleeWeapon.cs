@@ -17,5 +17,6 @@ public class MeleeWeapon : baseWeapon
 
     public override void LvUp()
     {
+        lv++;
     }
 }

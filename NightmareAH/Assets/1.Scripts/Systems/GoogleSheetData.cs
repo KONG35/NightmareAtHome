@@ -65,6 +65,8 @@ public class WeaponData : IBaseSheetData
     /// 8 pierceCount 관통 카운트
     /// 9 piercePer   관통시 데미지감소율
     /// 10 scale    무기 범위 크기
+    /// 11 Icon     무기 아이콘이름
+    /// 12 MaxLv    무기 최대 레벨
     /// </summary>
     /// <param name="values"></param>
     public void Parse(string[] values)
@@ -72,8 +74,8 @@ public class WeaponData : IBaseSheetData
         switch((eWeaponIndex)int.Parse(values[0]))
         {
             case eWeaponIndex.Flapper:
-                Weapon = new MeleeWeapon(float.Parse(values[6]), float.Parse(values[3]), 
-                    float.Parse(values[3]), float.Parse(values[10]), int.Parse(values[12]),DataTableManager.Instance.weaponIconList.Find(x => x.name == values[11]));
+                Weapon = new FlapperWeapon(DataTableManager.Instance.MeleeEffList.Find(x => x.name == "Flapper").Obj, float.Parse(values[6]), float.Parse(values[3]), 
+                    float.Parse(values[4]), float.Parse(values[10]), int.Parse(values[12]),DataTableManager.Instance.weaponIconList.Find(x => x.name == values[11]));
 
                 break;
             case eWeaponIndex.Kitchenknife:
@@ -86,7 +88,7 @@ public class WeaponData : IBaseSheetData
     }
 
 
-    enum eWeaponIndex
+    enum eWeaponIndex 
     {
         Flapper,
         Kitchenknife,
