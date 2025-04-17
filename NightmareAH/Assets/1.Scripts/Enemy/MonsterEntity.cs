@@ -21,37 +21,23 @@ public interface IPoolable
 public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 {
     public baseMonster monster;
-    [SerializeField]
-    private Transform target;
+    public Transform target { get; protected set; }
     public bool isDead { get; protected set; }
 
-    public MonsterState curState;
-    public MonsterState prevState;
-    public Animator animator;
-    private SpriteRenderer spriteRenderer;
-    private Rigidbody rigid;
+    public MonsterState curState { get; private set; }
+    public MonsterState prevState { get; private set; }
 
-    private Coroutine aniCor;
-    private bool isAnimating;
-
-    [Header("정렬 설정")]
-    public float gridSize = 0.1f;         // 그리드 간격
-    public int baseOrder = 1000;          // 기준 정렬 순서
-    public int orderPerLevel = 10;        // 그리드 1칸당 sortingOrder 차이
-
+    private MonsterAnimController animCtlr;
+    
     public float DropExpChance = 0.3f;
 
     private void Awake()
     {
         isDead = false;
-        isAnimating = false;
         curState = MonsterState.None;
         prevState = MonsterState.None;
-        aniCor = null;
 
-        rigid = gameObject.GetComponent<Rigidbody>();
-        animator = gameObject.GetComponent<Animator>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        animCtlr = gameObject.GetComponent<MonsterAnimController>();
     }
     /// <summary>
     /// 스폰 Init문
@@ -59,9 +45,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     protected void Init()
     {
         isDead = false;
-        isAnimating = false;
         curState = MonsterState.Chase;
-        aniCor = null;
     }
     public virtual void Update()
     {
@@ -75,6 +59,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         {
             prevState = curState;
 
+            
             switch (curState)
             {
                 case MonsterState.Attack:
@@ -107,37 +92,33 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         }
 
     }
-    void LateUpdate()
+    public virtual void FixedUpdate()
     {
-        if (target == null)
+        if (curState != MonsterState.Chase)
             return;
 
-        if (isDead) return;
-        float offsetY = transform.position.y - target.position.y;
-        int level = Mathf.FloorToInt(offsetY / gridSize);
-
-        spriteRenderer.sortingOrder = baseOrder - (level * orderPerLevel);
-
-        float offsetX = transform.position.x - target.position.x;
-        spriteRenderer.flipX = (offsetX >= 0);
-    }
-    public virtual void ChaseUpdate()
-    {
-        if (IsInAttackRange())
+        if (monster.AttackType == MonsterAttackType.Range && IsInAttackRange())
         {
             curState = MonsterState.Attack;
             return;
         }
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * monster.Speed);
+        else
+        {
+            curState = MonsterState.Chase;
+            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * monster.Speed);
+        }
+    }
+    public virtual void ChaseUpdate()
+    {
     }
 
     public virtual void AttackInit()
     {
-        StartAnimTrigger("IsAttack");
+        animCtlr.OnMonsterAnim(curState);
     }
     public virtual void KnockInit()
     {
-        StartAnimTrigger("IsKnocked");
+        animCtlr.OnMonsterAnim(curState);
     }
 
     public virtual void Hit(float dmg)
@@ -151,13 +132,8 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public virtual void DeadInit()
     {
         isDead = true;
-        if(aniCor != null)
-        {
-            StopCoroutine(aniCor);
-            aniCor = null;
-        }
+        animCtlr.OnMonsterAnim(curState);
         DropItem();
-        animator.CrossFade("IsDead", 0.05f);
     }
 
     /// <summary>
@@ -188,35 +164,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         else
             return false;
     }
-    private void StartAnimTrigger(string stateName)
-    {
-        isAnimating = true;
-        animator.SetTrigger(stateName);
-
-        aniCor = StartCoroutine(WaitForAnimation(stateName, () =>
-        {
-            isAnimating = false;
-            curState = MonsterState.Chase;
-            aniCor = null;
-        }));
-    }
-    IEnumerator WaitForAnimation(string stateName, System.Action onEnd)
-    {
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
-        {
-            if (isDead) yield break;
-            yield return null;
-        }
-
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        {
-            if (isDead) yield break;
-            yield return null;
-        }
-
-        if (!isDead)
-            onEnd?.Invoke();
-    }
+    
 
     private void DropItem()
     {
@@ -224,5 +172,9 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         {
             SpawnManager.Instance.SpawnExp(this.monster.Exp, this.transform.position);
         }
+    }
+    public void SetMonsterState(MonsterState state)
+    {
+        curState = state;
     }
 }
