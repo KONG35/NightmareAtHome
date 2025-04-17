@@ -142,8 +142,8 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
     public virtual void Hit(float dmg)
     {
-        monster.MaxHp -= dmg;
-        if (monster.MaxHp <= 0)
+        monster.CurHp -= dmg;
+        if (monster.CurHp <= 0)
         {
             curState = MonsterState.Dead;
         }
