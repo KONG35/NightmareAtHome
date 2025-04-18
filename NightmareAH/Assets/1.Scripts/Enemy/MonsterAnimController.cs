@@ -11,7 +11,7 @@ public class MonsterAnimClips
     public AnimationClip knockClip;
     public AnimationClip deathClip;
 }
-
+// attack < knock < dead
 public class MonsterAnimController : MonoBehaviour
 {
     private MonsterEntity entity;
@@ -20,29 +20,27 @@ public class MonsterAnimController : MonoBehaviour
 
     [SerializeField]
     private MonsterAnimClips animClips;
-    
+
+    private AnimatorOverrideController overrideController;
     private Coroutine aniCor;
     
-    private bool isAnimating;
     
     private void Awake()
     {
         entity = gameObject.GetComponent<MonsterEntity>();
         animator = gameObject.GetComponent<Animator>();
-        isAnimating = false;
         aniCor = null;
 
         ApplyAnimationOverride();
     }
     private void OnDisable()
     {
-        isAnimating = false;
         aniCor = null;
 
     }
     private void ApplyAnimationOverride()
     {
-        AnimatorOverrideController overrideController = new AnimatorOverrideController(AnimationManager.Instance.monsterAnimCtlr);
+        overrideController = new AnimatorOverrideController(AnimationManager.Instance.monsterAnimCtlr);
 
         // 상태 이름에 맞춰서 클립 매핑
         var overrides = new List<KeyValuePair<AnimationClip, AnimationClip>>();
@@ -77,26 +75,38 @@ public class MonsterAnimController : MonoBehaviour
             case MonsterState.Attack:
                 {
                     // 원거리 공격만 attack 모션 있음
-                    StartAnimTrigger("IsAttack", () => EndAction());
+                    StartAnimTrigger("IsAttack", () => AttackEndAction(), false);
                 }
                 break;
             case MonsterState.Knock:
                 {
-                    StartAnimTrigger("IsKnock", () => EndAction());
+                    // 현재 진행하던 애니메이션 끊고 즉시 맞는 애니메이션 진행
+                    StartAnimTrigger("IsKnock", () => KnockEndAction(), true);
                 }
                 break;
             case MonsterState.Dead:
                 {
-                    DeadAction();
+                    // 현재 진행하던 애니메이션 끊고 즉시 죽는 애니메이션 진행
+                    StartAnimTrigger("IsDead", () => DeadEndAction(), true);
                 }
                 break;
         }
     }
-    private void StartAnimTrigger(string stateName,System.Action onEnd)
+    private void StartAnimTrigger(string stateName,System.Action onEnd, bool isImmediately)
     {
-        isAnimating = true;
-        animator.SetTrigger(stateName);
-
+        if (aniCor != null)
+        {
+            StopCoroutine(aniCor);
+            aniCor = null;
+        }
+        if (isImmediately)
+        {
+            animator.CrossFade(stateName, 0.05f);
+        }
+        else
+        {
+            animator.SetTrigger(stateName);
+        }
         aniCor = StartCoroutine(WaitForAnimation(stateName, () =>
         {
             onEnd();
@@ -107,33 +117,26 @@ public class MonsterAnimController : MonoBehaviour
     {
         while (!animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
         {
-            if (entity.isDead) yield break;
             yield return null;
         }
 
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
-            if (entity.isDead) yield break;
             yield return null;
         }
 
-        if (!entity.isDead)
-            onEnd?.Invoke();
+        onEnd?.Invoke();
     }
-    private void EndAction()
+    private void AttackEndAction()
     {
         entity.SetMonsterState(MonsterState.Chase);
-        isAnimating = false;
-        aniCor = null;
     }
-    private void DeadAction()
+    private void KnockEndAction()
     {
-        if (aniCor != null)
-        {
-            StopCoroutine(aniCor);
-            aniCor = null;
-        }
-        // 현재 진행하던 애니메이션 끊고 즉시 죽는 애니메이션 진행
-        animator.CrossFade("IsDead", 0.05f);
+        entity.SetMonsterState(MonsterState.Chase);
+    }
+    private void DeadEndAction()
+    {
+        entity.OnDespawn();
     }
 }

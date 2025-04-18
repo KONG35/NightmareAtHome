@@ -98,9 +98,9 @@ GameObject:
   - component: {fileID: 8815537857342724304}
   - component: {fileID: 2211505335901467450}
   - component: {fileID: -8601997574725924618}
+  - component: {fileID: -5605317583394888451}
   - component: {fileID: 1151662248850285249}
   - component: {fileID: 3682057826438084911}
-  - component: {fileID: 2642329405459674481}
   m_Layer: 10
   m_Name: m01_Cock
   m_TagString: Enemy
@@ -232,7 +232,6 @@ MonoBehaviour:
     Frequency: 0.5
     AttackRange: 1
     Exp: 50
-  animator: {fileID: 0}
   DropExpChance: 0.3
 --- !u!114 &-8601997574725924618
 MonoBehaviour:
@@ -249,6 +248,24 @@ MonoBehaviour:
   gridSize: 0.1
   baseOrder: 1000
   orderPerLevel: 10
+--- !u!114 &-5605317583394888451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662438717467841150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff8f115c5c958a46a254df05c55923e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  animClips:
+    walkClip: {fileID: 7400000, guid: 7d4b9c3402884f44eac42c4b106431cd, type: 2}
+    attackClip: {fileID: 7400000, guid: fe4fe7eb8b22a094eb9442734913df93, type: 2}
+    knockClip: {fileID: 7400000, guid: e0d70a35c01b5a745adbf91c7c6af2d2, type: 2}
+    deathClip: {fileID: 7400000, guid: a54f5420fe2f7fa419e32fabea18a917, type: 2}
 --- !u!54 &1151662248850285249
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -297,20 +314,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6375954, y: 0.4843613, z: 0.2}
   m_Center: {x: 0.018797755, y: -0.11806792, z: 0}
---- !u!114 &2642329405459674481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662438717467841150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ff8f115c5c958a46a254df05c55923e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animClips:
-    walkClip: {fileID: 0}
-    attackClip: {fileID: 0}
-    knockClip: {fileID: 0}
-    deathClip: {fileID: 0}
