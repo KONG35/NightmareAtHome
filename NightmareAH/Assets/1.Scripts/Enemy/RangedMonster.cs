@@ -7,7 +7,7 @@ public class RangedMonster: baseMonster
 {
     public int PierceCount;
 
-    public RangedMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency, int _pierceCount, float _attackRange, int _exp) :base(_monsterID, _name, _attackType, _maxHp, _attackDmg, _speed, _frequency, _attackRange, _exp)
+    public RangedMonster(string _monsterID, string _name, MonsterAttackType _attackType, float _maxHp, float _attackDmg, float _speed, float _frequency, float _attackRange, int _exp, int _pierceCount) :base(_monsterID, _name, _attackType, _maxHp, _attackDmg, _speed, _frequency, _attackRange, _exp)
     {
         PierceCount = _pierceCount;
     }

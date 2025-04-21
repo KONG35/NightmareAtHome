@@ -17,9 +17,7 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
     private Dictionary<Type, IList> dataLists = new Dictionary<Type, IList>();
     private Dictionary<Type, string> csvURLs = new Dictionary<Type, string>
     {
-        { typeof(MeleeMonsterSheetData), SHEETURL+"0" },
-
-        { typeof(RangedMonsterSheetData), SHEETURL+"329945714" },
+        { typeof(MonsterSheetData), SHEETURL+"2054097189" },
 
         { typeof(UITextData), SHEETURL+"938497610" },
 
@@ -28,8 +26,6 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
         { typeof(WeaponData), SHEETURL+"1842892579" },
 
     };
-
-    public bool isInit = false;
 
     private void Start()
     {
@@ -59,7 +55,6 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
                 Debug.LogWarning($"{dataType.Name}은(는) IBaseSheetData를 구현하지 않습니다.");
             }
         }
-        isInit = true;
     }
 
     private IEnumerator LoadCSV<T>(Type type, string url) where T : IBaseSheetData, new()
@@ -107,10 +102,5 @@ public class GoogleSheetLoader : Singleton<GoogleSheetLoader>
     {
         Type type = typeof(T);
         return dataLists.ContainsKey(type) ? (List<T>)dataLists[type] : new List<T>();
-    }
-    [Button]
-    private void LoadIngameSceneEdit()
-    {
-        SceneManager.LoadScene("2.Ingame", LoadSceneMode.Additive);
     }
 }

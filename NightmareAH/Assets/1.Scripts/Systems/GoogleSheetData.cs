@@ -1,10 +1,50 @@
+ï»¿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// °øÅë µ¥ÀÌÅÍ ÀÎÅÍÆäÀÌ½º
+// ê³µí†µ ë°ì´í„° ì¸í„°í˜ì´ìŠ¤
 public interface IBaseSheetData
 {
-    void Parse(string[] values); // °¢ µ¥ÀÌÅÍ Å¬·¡½º¸¶´Ù ±¸Çö
+    void Parse(string[] values); // ê° ë°ì´í„° í´ë˜ìŠ¤ë§ˆë‹¤ êµ¬í˜„
+}
+public class MonsterSheetData : IBaseSheetData
+{
+    public string Key { get; private set; }
+    public baseMonster monster;
+
+    public void Parse(string[] values)
+    {
+        //if (values.Length < 6) return;
+
+        Key = values[0]; // ëª¬ìŠ¤í„° ê³ ìœ  ê°’
+
+        if (EnumUtil.TryParseIgnoreCase<MonsterAttackType>(values[1], out var attackType))
+        {
+            // ì¼ì¹˜í•˜ëŠ” enum íƒ€ì…ì´ ì¡´ì¬í•  ê²½ìš°
+            Debug.Log($"AttackType: {attackType}");
+        }
+        else
+        {
+            // ì˜ëª»ëœ ê°’ì¼ ê²½ìš°
+            Debug.LogError($"Invalid AttackType: {values[1]}");
+        }
+        switch (attackType)
+        {
+            case MonsterAttackType.Melee:
+                {
+                    monster = new MeleeMonster(values[0], values[2], MonsterAttackType.Melee, float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]), float.Parse(values[7]), int.Parse(values[8]));
+                }
+                break;
+            case MonsterAttackType.Range:
+                {
+                    monster = new RangedMonster(values[0], values[2], MonsterAttackType.Melee, float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]), float.Parse(values[7]), int.Parse(values[8]), int.Parse(values[9]));
+                }
+                break;
+        }
+        
+
+    }
 }
 public class MeleeMonsterSheetData : IBaseSheetData
 {
@@ -30,7 +70,7 @@ public class RangedMonsterSheetData : IBaseSheetData
         //if (values.Length < 7) return;
 
         Key = values[0];
-        monster = new RangedMonster(values[0], values[1], MonsterAttackType.Range, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]),int.Parse(values[6]), float.Parse(values[7]), int.Parse(values[8]));
+        monster = new RangedMonster(values[0], values[1], MonsterAttackType.Range, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]), int.Parse(values[7]), int.Parse(values[8]));
 
     }
 }
@@ -44,7 +84,7 @@ public class SpawnSheetData : IBaseSheetData
     {
         if (values.Length < 5) return;
 
-        Key = values[0]; // ¶ó¿îµå ¹øÈ£
+        Key = values[0]; // ë¼ìš´ë“œ ë²ˆí˜¸
         spawn = new Spawn(int.Parse(values[0]), values[1], float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), int.Parse(values[5]));
 
     }
@@ -54,19 +94,19 @@ public class WeaponData : IBaseSheetData
     public string key { get; private set; }
     public baseWeapon Weapon;
     /// <summary>
-    /// 0 index     ÀÎµ¦½º
-    /// 1 type      ¹«±âÅ¸ÀÔ
-    /// 2 name      ¹«±âÀÌ¸§
-    /// 3 damage    µ¥¹ÌÁö
-    /// 4 frequency ¹«±â »ç¿ëºóµµ
-    /// 5 minrenge  ¹«±â ¹ß»ç,°ø°İ °¡´É ÃÖ¼Ò¹üÀ§
-    /// 6 maxrange  ¹«±â ¹ß»ç,°ø°İ °¡´É ÃÖ´ë¹üÀ§
-    /// 7 speed     ¹«±â Åõ»çÃ¼ÀÇ ¼Óµµ
-    /// 8 pierceCount °üÅë Ä«¿îÆ®
-    /// 9 piercePer   °üÅë½Ã µ¥¹ÌÁö°¨¼ÒÀ²
-    /// 10 scale    ¹«±â ¹üÀ§ Å©±â
-    /// 11 Icon     ¹«±â ¾ÆÀÌÄÜÀÌ¸§
-    /// 12 MaxLv    ¹«±â ÃÖ´ë ·¹º§
+    /// 0 index     ì¸ë±ìŠ¤
+    /// 1 type      ë¬´ê¸°íƒ€ì…
+    /// 2 name      ë¬´ê¸°ì´ë¦„
+    /// 3 damage    ë°ë¯¸ì§€
+    /// 4 frequency ë¬´ê¸° ì‚¬ìš©ë¹ˆë„
+    /// 5 minrenge  ë¬´ê¸° ë°œì‚¬,ê³µê²© ê°€ëŠ¥ ìµœì†Œë²”ìœ„
+    /// 6 maxrange  ë¬´ê¸° ë°œì‚¬,ê³µê²© ê°€ëŠ¥ ìµœëŒ€ë²”ìœ„
+    /// 7 speed     ë¬´ê¸° íˆ¬ì‚¬ì²´ì˜ ì†ë„
+    /// 8 pierceCount ê´€í†µ ì¹´ìš´íŠ¸
+    /// 9 piercePer   ê´€í†µì‹œ ë°ë¯¸ì§€ê°ì†Œìœ¨
+    /// 10 scale    ë¬´ê¸° ë²”ìœ„ í¬ê¸°
+    /// 11 Icon     ë¬´ê¸° ì•„ì´ì½˜ì´ë¦„
+    /// 12 MaxLv    ë¬´ê¸° ìµœëŒ€ ë ˆë²¨
     /// </summary>
     /// <param name="values"></param>
     public void Parse(string[] values)
@@ -100,7 +140,7 @@ public enum LanguageType
     English=0,
     Korean
 }
- //¾ğ¾î µ¥ÀÌÅÍ
+ //ì–¸ì–´ ë°ì´í„°
 public class UITextData : IBaseSheetData
 {
     public int Key { get; private set; }
