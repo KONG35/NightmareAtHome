@@ -28,8 +28,10 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public MonsterState prevState { get; private set; }
 
     private MonsterAnimController animCtlr;
-    
-    public float DropExpChance = 0.3f;
+
+    private SpawnManager spawnManager;
+
+    private float DropExpChance = 0.3f;
 
     private void Awake()
     {
@@ -38,6 +40,8 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         prevState = MonsterState.None;
 
         animCtlr = gameObject.GetComponent<MonsterAnimController>();
+
+        spawnManager = SpawnManager.Instance;
     }
     /// <summary>
     /// ½ºÆù Init¹®
@@ -155,6 +159,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public virtual void OnDespawn()
     {
         gameObject.SetActive(false);
+        spawnManager.monsterFactory.ReturnMonster(this);
     }
 
     private bool IsInAttackRange()
@@ -170,7 +175,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     {
         if(Random.Range(0f,1f)< DropExpChance)
         {
-            SpawnManager.Instance.SpawnExp(this.monster.Exp, this.transform.position);
+            spawnManager.SpawnExp(this.monster.Exp, this.transform.position);
         }
     }
     public void SetMonsterState(MonsterState state)
