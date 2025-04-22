@@ -159,7 +159,6 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public virtual void OnDespawn()
     {
         gameObject.SetActive(false);
-        spawnManager.monsterFactory.ReturnMonster(this);
     }
 
     private bool IsInAttackRange()
@@ -170,7 +169,6 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
             return false;
     }
     
-
     private void DropItem()
     {
         if(Random.Range(0f,1f)< DropExpChance)
@@ -181,5 +179,9 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     public void SetMonsterState(MonsterState state)
     {
         curState = state;
+    }
+    public void OnReturn()
+    {
+        spawnManager.monsterFactory.ReturnMonster(this);
     }
 }

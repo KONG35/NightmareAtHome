@@ -17,30 +17,16 @@ public class MonsterFactory : MonoBehaviour
 
         for (int i = 0; i < monsterPrefabs.Length; i++)
         {
-            switch (monsterPrefabs[i].monster.AttackType)
+            var m = monsterData.Find(x => x.monster.MonsterID == monsterPrefabs[i].monster.MonsterID);
+            if (m.monster is MeleeMonster melee)
             {
-                case MonsterAttackType.Melee:
-                    {
-                        var m = monsterData.Find(x => x.monster.MonsterID == monsterPrefabs[i].monster.MonsterID);
-
-                        if (m != null)
-                        {
-                            monsterPrefabs[i].monster = new MeleeMonster((MeleeMonster)m.monster);
-                        }
-                    }
-                    break;
-                case MonsterAttackType.Range:
-                    {
-                        var m = monsterData.Find(x => x.monster.MonsterID == monsterPrefabs[i].monster.MonsterID);
-
-                        if (m != null)
-                        {
-                            monsterPrefabs[i].monster = new RangedMonster((RangedMonster)m.monster);
-                        }
-                    }
-                    break;
+                monsterPrefabs[i].monster = new MeleeMonster(melee); // 복사 생성자
             }
-           
+            else if (m.monster is RangedMonster range)
+            {
+                monsterPrefabs[i].monster = new RangedMonster(range); // 복사 생성자
+            }
+            
         }
         // 풀 생성 시 기본 prefab은 아무거나 사용합니다.
         if (monsterPrefabs.Length > 0)

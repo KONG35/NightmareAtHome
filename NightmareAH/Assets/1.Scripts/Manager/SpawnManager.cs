@@ -90,5 +90,8 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         ItemPool.ReturnObject(item);
     }
-
+    public void DespawnMonster(MonsterEntity monster)
+    {
+        monsterFactory.ReturnMonster(monster);
+    }
 }

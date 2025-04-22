@@ -137,6 +137,6 @@ public class MonsterAnimController : MonoBehaviour
     }
     private void DeadEndAction()
     {
-        entity.OnDespawn();
+        entity.OnReturn();
     }
 }

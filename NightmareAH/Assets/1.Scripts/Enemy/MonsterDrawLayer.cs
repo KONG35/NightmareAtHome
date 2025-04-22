@@ -23,6 +23,8 @@ public class MonsterDrawLayer : MonoBehaviour
     [Header("그리드 1칸당 sortingOrder 차이")]
     [SerializeField]
     private int orderPerLevel = 10;        // 그리드 1칸당 sortingOrder 차이
+
+    private Vector3 diableVec = new Vector3(99f, 99f, 99f); // despawn될 때 두는 곳
     private void Awake()
     {
         monster = gameObject.GetComponent<MonsterEntity>();
@@ -31,7 +33,7 @@ public class MonsterDrawLayer : MonoBehaviour
     }
     private void OnDisable()
     {
-        prevTargetPos = Vector3.up;
+        prevTargetPos = diableVec;
     }
     void LateUpdate()
     {
@@ -44,7 +46,7 @@ public class MonsterDrawLayer : MonoBehaviour
         if (monster.isDead) 
             return;
 
-        if (prevTargetPos == Vector3.up)
+        if (prevTargetPos == diableVec)
         {
             prevTargetPos = monster.target.position;
             return;
