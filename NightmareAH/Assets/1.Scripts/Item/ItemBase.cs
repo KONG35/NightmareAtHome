@@ -4,7 +4,7 @@ using System.Threading;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public abstract class ItemBase : MonoBehaviour ,IPoolable
+public abstract class ItemBase : MonoBehaviour , IPoolable
 {
     public eItemType Type;
     void IPoolable.OnDespawn()

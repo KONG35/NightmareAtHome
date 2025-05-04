@@ -46,34 +46,6 @@ public class MonsterSheetData : IBaseSheetData
 
     }
 }
-public class MeleeMonsterSheetData : IBaseSheetData
-{
-    public string Key { get; private set; }
-    public MeleeMonster monster;
-
-    public void Parse(string[] values)
-    {
-        //if (values.Length < 6) return;
-
-        Key = values[0];
-        monster = new MeleeMonster(values[0], values[1], MonsterAttackType.Melee, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]), int.Parse(values[7]));
-
-    }
-}
-public class RangedMonsterSheetData : IBaseSheetData
-{
-    public string Key { get; private set; }
-    public RangedMonster monster;
-
-    public void Parse(string[] values)
-    {
-        //if (values.Length < 7) return;
-
-        Key = values[0];
-        monster = new RangedMonster(values[0], values[1], MonsterAttackType.Range, float.Parse(values[2]), float.Parse(values[3]), float.Parse(values[4]), float.Parse(values[5]), float.Parse(values[6]), int.Parse(values[7]), int.Parse(values[8]));
-
-    }
-}
 
 public class SpawnSheetData : IBaseSheetData
 {

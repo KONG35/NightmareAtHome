@@ -4,20 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Xml;
 using UnityEngine;
 
-public interface IBaseMonster
-{
-    void ChaseUpdate();
-    void AttackInit();
-    void KnockInit();
-    void Hit(float dmg);
-    void DeadInit();
-}
-// 풀링 인터페이스: 오브젝트가 스폰될 때와 반환될 때 호출되는 메서드를 정의
-public interface IPoolable
-{
-    void OnSpawn();
-    void OnDespawn();
-}
 public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 {
     public baseMonster monster;
@@ -32,7 +18,10 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     private SpawnManager spawnManager;
 
     private float DropExpChance = 0.3f;
+    public int poolIndx { get; private set; }
 
+    private float innerRadius = 10f;
+    private float outerRadius = 15f;
     private void Awake()
     {
         isDead = false;
@@ -143,7 +132,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     /// <summary>
     /// 오브젝트가 풀에서 꺼내질 때 호출됨
     /// </summary>
-    public virtual void OnSpawn()
+    void IPoolable.OnSpawn()
     {
         Init();
 
@@ -151,12 +140,13 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         if (target == null)
             target = FindObjectOfType<PlayerCharacter>().transform;
 
+        gameObject.transform.position = SetPosition(target.transform.position);
         gameObject.SetActive(true);
     }
     /// <summary>
     /// 오브젝트가 풀로 반환될 때 호출됨
     /// </summary>
-    public virtual void OnDespawn()
+    void IPoolable.OnDespawn()
     {
         gameObject.SetActive(false);
     }
@@ -182,6 +172,18 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     }
     public void OnReturn()
     {
-        spawnManager.monsterFactory.ReturnMonster(this);
+        spawnManager.DespawnMonster(this);
+    }
+    public void SetPoolIndex(int _idx)
+    {
+        poolIndx = _idx;
+    }
+
+    private Vector3 SetPosition(Vector3 target)
+    {
+        float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
+        float distance = UnityEngine.Random.Range(innerRadius, outerRadius);
+        
+        return new Vector3(target.x + Mathf.Cos(angle) * distance, target.y + Mathf.Sin(angle) * distance, 0f);
     }
 }

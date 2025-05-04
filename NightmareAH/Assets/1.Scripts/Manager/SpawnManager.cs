@@ -27,43 +27,15 @@ public class SpawnManager : Singleton<SpawnManager>
     public MonsterFactory monsterFactory;
 
 
-    private List<SpawnSheetData> spawnList;
 
     private ObjectPool<ItemBase> ItemPool;
     public List<ItemBase> ItemPrefabList;
 
     private void Start()
     {
-        //    spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnData>();
-        //    monsterFactory.Init();
-        ItemPool = new ObjectPool<ItemBase>(ItemPrefabList[0],100,this.transform);
+        ItemPool = new ObjectPool<ItemBase>(ItemPrefabList[0],100,false, this.transform);
     }
 
-    [Button]
-    private void InitEdit()
-    {
-
-        spawnList = GoogleSheetLoader.Instance.GetDataList<SpawnSheetData>();
-        monsterFactory.Init();
-    }
-    [Button]
-    private void SpawnStartEdit()
-    {
-        // 구글시트에서 받아온대로 spawn
-        StartCoroutine(CreateMonsterCor());
-
-    }
-    IEnumerator CreateMonsterCor()
-    {
-        for(int i = 0; i < spawnList.Count; i++)
-        {
-            yield return new WaitForSeconds(spawnList[i].spawn.spawnTime);
-
-            monsterFactory.CreateMonster(spawnList[i].spawn);
-        }
-        yield return null;
-
-    }
     // 풀로 반환하는 코루틴
     IEnumerator ReturnToPoolAfterDelay(MonsterAttackType type, baseMonster monster, float delay)
     {

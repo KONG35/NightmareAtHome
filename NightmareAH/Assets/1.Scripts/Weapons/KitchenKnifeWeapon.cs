@@ -10,7 +10,7 @@ public class KitchenKnifeWeapon : ProjectlieWeapon
     public KitchenKnifeWeapon(ProjectlieObject obj, float MaxRange, float MinRange, float speed, int pierceCount, float piercePer, float Damage, float frequency,int MaxLv, DataTableManager.WeaponIconData icon) : base(MaxRange, MinRange, speed, pierceCount, piercePer, Damage, frequency,MaxLv,icon)
     {
         ProjectlieObj = obj;
-        ObjPool = new ObjectPool<ProjectlieObject>(ProjectlieObj,10);
+        ObjPool = new ObjectPool<ProjectlieObject>(ProjectlieObj,10, false);
     }
 
     public override void Action()

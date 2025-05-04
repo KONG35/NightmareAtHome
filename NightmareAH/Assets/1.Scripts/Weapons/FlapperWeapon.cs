@@ -14,7 +14,7 @@ public class FlapperWeapon : MeleeWeapon
     public FlapperWeapon(MeleeObject obj ,float Range, float Damage, float frequency,float scale,int MaxLv,DataTableManager.WeaponIconData icon) : base(Range,Damage, frequency,scale,MaxLv,icon)
     {
         SlashObject = obj;
-        SlashList= new ObjectPool<MeleeObject>(SlashObject,MaxLv);
+        SlashList= new ObjectPool<MeleeObject>(SlashObject,MaxLv, false);
     }
 
     public override void Action()

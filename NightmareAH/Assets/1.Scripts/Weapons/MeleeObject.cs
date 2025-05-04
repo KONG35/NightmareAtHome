@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeObject : MonoBehaviour ,IPoolable
+public class MeleeObject : MonoBehaviour , IPoolable
 {
     public SpriteRenderer sr;
     public BoxCollider Col;

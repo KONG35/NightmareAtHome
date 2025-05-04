@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ProjectlieObject : MonoBehaviour ,IPoolable
+public class ProjectlieObject : MonoBehaviour , IPoolable
 {
     public Action<Collider> HitAction;
     public Action MaxRangeAction;
