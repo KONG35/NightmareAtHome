@@ -138,17 +138,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster:
     MonsterID: r01
-    Name: 
-    AttackType: 1
-    MaxHp: 0
-    CurHp: 0
-    AttackDamage: 0
-    Speed: 0
-    Frequency: 0
-    AttackRange: 0
-    Exp: 0
-  animator: {fileID: 0}
-  DropExpChance: 0.3
+    Name: "\uBA3C\uC9C0\uBB49\uCE58"
+    AttackType: 0
+    MaxHp: 30
+    CurHp: 30
+    AttackDamage: 5
+    Speed: 1
+    Frequency: 1
+    AttackRange: 3.5
+    Exp: 200
+  isDead: 0
+  curState: 0
+  prevState: 0
+  poolIndx: 2
 --- !u!114 &8355617815641431615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ff8f115c5c958a46a254df05c55923e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   animClips:
     walkClip: {fileID: 7400000, guid: 85eee245ab9b8bc4eb7db7f310d7bac1, type: 2}
     attackClip: {fileID: 7400000, guid: 4a11e8a27e992a84e8c8be2ef22833c5, type: 2}
@@ -190,7 +193,7 @@ Rigidbody:
   m_GameObject: {fileID: 2111999886971251472}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 3.5
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

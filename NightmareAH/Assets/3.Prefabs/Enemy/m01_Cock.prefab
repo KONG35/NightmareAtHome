@@ -228,11 +228,14 @@ MonoBehaviour:
     MaxHp: 100
     CurHp: 100
     AttackDamage: 10
-    Speed: 2
+    Speed: 1
     Frequency: 0.5
     AttackRange: 1
     Exp: 50
-  DropExpChance: 0.3
+  isDead: 0
+  curState: 0
+  prevState: 0
+  poolIndx: 0
 --- !u!114 &-8601997574725924618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +278,7 @@ Rigidbody:
   m_GameObject: {fileID: 3662438717467841150}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 3.5
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
