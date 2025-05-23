@@ -4,6 +4,11 @@ using System.Runtime.CompilerServices;
 using System.Xml;
 using UnityEngine;
 
+
+[RequireComponent(typeof(GASAttributeSetComponent))]
+[RequireComponent(typeof(GASAbilityComponent))]
+[RequireComponent(typeof(GASTagComponent))]
+[RequireComponent(typeof(GASCueComponent))]
 public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 {
     public baseMonster monster;
@@ -22,6 +27,13 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
     private float innerRadius = 10f;
     private float outerRadius = 15f;
+
+    GASAttributeSetComponent _state;
+    GASAbilityComponent _ability;
+    GASTagComponent _tag;
+    GASCueComponent _cue;
+
+
     private void Awake()
     {
         isDead = false;
@@ -31,6 +43,15 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         animCtlr = gameObject.GetComponent<MonsterAnimController>();
 
         spawnManager = SpawnManager.Instance;
+
+        if (_state == null)
+            _state = gameObject.GetComponent<GASAttributeSetComponent>();
+        if (_ability == null)
+            _ability = gameObject.GetComponent<GASAbilityComponent>();
+        if (_tag == null)
+            _tag = gameObject.GetComponent<GASTagComponent>();
+        if (_cue == null)
+            _cue = gameObject.GetComponent<GASCueComponent>();
     }
     /// <summary>
     /// ½ºÆù Init¹®
@@ -114,6 +135,13 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         animCtlr.OnMonsterAnim(curState);
     }
 
+    public virtual void Hit(AttributeDefSO targetAttribute, float dmg)
+    {
+        _state.ModifyValue(targetAttribute, -dmg);
+        if (_state.GetValue(DataTableManager.Instance.GetSO(eAttributeSo.HP)) <= 0)
+            curState = MonsterState.Dead;
+    }
+    /*
     public virtual void Hit(float dmg)
     {
         monster.CurHp -= dmg;
@@ -121,7 +149,8 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         {
             curState = MonsterState.Dead;
         }
-    }
+    }*/
+
     public virtual void DeadInit()
     {
         isDead = true;
