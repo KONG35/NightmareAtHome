@@ -14,7 +14,7 @@ public class AutoProjectileExecutorSO : AbilityExecutorSO
         if (WaitTime < State.Cooldown)
             return;
         if(ObjPool == null)
-            ObjPool = new ObjectPool<ProjectlieObject>(ProjectlieObj, 10);
+            ObjPool = new ObjectPool<ProjectlieObject>(ProjectlieObj, 10,false);
 
         var Target = FindClosestEnemy(context.Caster.transform, State.MaxRange);
 

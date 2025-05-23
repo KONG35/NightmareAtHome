@@ -19,7 +19,7 @@ public class MeleeAttackExecutorSO : AbilityExecutorSO
         if (WaitTime < State.Cooldown)
             return;
         if (SlashList == null)
-            SlashList = new ObjectPool<MeleeObject>(SlashObject,5,context.Caster.transform);
+            SlashList = new ObjectPool<MeleeObject>(SlashObject,5,false,context.Caster.transform);
         if (Caster == null)
             Caster = context.Caster.GetComponent<PlayerCharacter>();
         float damage = context.Attributes.GetValue(context.Definition.DamageAttribute) * State.CharactorDamageMultiplier + State.Damage;
