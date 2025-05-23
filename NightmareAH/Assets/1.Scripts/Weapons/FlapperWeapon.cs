@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class FlapperWeapon : MeleeWeapon
 {
@@ -42,7 +39,7 @@ public class FlapperWeapon : MeleeWeapon
             obj.HitAction = (other) => {
                 if (other.gameObject.CompareTag("Enemy"))
                 {
-                    other.gameObject.GetComponent<MonsterEntity>().Hit(Damage);
+                    //other.gameObject.GetComponent<MonsterEntity>().Hit(Damage);
                 }
             };
             yield return new WaitForSeconds(0.4f);

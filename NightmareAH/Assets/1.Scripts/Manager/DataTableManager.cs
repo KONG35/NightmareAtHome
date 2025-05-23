@@ -7,7 +7,8 @@ public class DataTableManager : Singleton<DataTableManager>
     public List<WeaponIconData> weaponIconList;
     public List<ProjectlieData> ProjectlieList;
     public List<MeleeEffData> MeleeEffList;
-
+    public List<AttributeDefSO> attributeSOList;
+    public List<AbilityDefSO> AbilitySOList;
 
     [System.Serializable]
     public struct WeaponIconData
@@ -28,5 +29,34 @@ public class DataTableManager : Singleton<DataTableManager>
         public string name;
         public MeleeObject Obj;
     }
+
+    public AttributeDefSO GetSO(eAttributeSo e)
+    {
+        if (attributeSOList.Count <= (int)e)
+            return null;   
+        return attributeSOList[(int)e];
+    }
+}
+
+public enum eAttributeSo
+{
+    LV,
+    HP,
+    EXP,
+    MoveSpeed,
+    AttackDamage,
+    AttackMultiplier,
+    AttackRange,
+    AttackSpeed,
+    CriticalChance,
+    CriticalMultiplier,
+    PierceCount,
+    BounceCount,
+    ProjectileSpeed,
+    WeaponSize,
+
+
+
+    COUNT
 }
 

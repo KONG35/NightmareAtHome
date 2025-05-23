@@ -1,11 +1,13 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
+
+[RequireComponent(typeof(GASTagComponent))]
+[RequireComponent(typeof(GASAttributeSetComponent))]
+[RequireComponent(typeof(GASAbilityComponent))]
+[RequireComponent(typeof(GASCueComponent))]
 public class PlayerCharacter : Singleton<PlayerCharacter>
 {
     public float MaxHp = 100f;
@@ -37,6 +39,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         {
             Lv++;
             Exp -= ExpLvTable[curLv-1];
+            if (ExpLvTable.Length <= Lv)
+                return;
             if (ExpLvTable[curLv] <= Exp)
                 StartCoroutine(DelayLvUp());
             if (InGameUI.Instance)
@@ -54,6 +58,8 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         set
         {
             Exp = value;
+            if (ExpLvTable.Length <= Lv)
+                return;
             if (InGameUI.Instance)
                 InGameUI.Instance.ExpGaugeUI.SetBar(Exp, ExpLvTable[curLv]);
             if (ExpLvTable[curLv]<=Exp&& InGameUI.Instance&&!InGameUI.Instance.SkillPickUI.gameObject.activeSelf)
@@ -77,6 +83,15 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     public List<WeaponData> weaponList;
 
+    bool isDead = false;
+
+
+    GASTagComponent tagComponent;
+    GASAttributeSetComponent _state;
+    GASAbilityComponent abilityComponent;
+    GASCueComponent cueComponent;
+
+
     public void Start()
     {
         if (Weapons == null)
@@ -91,6 +106,17 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         if (myRender == null)
             myRender = gameObject.GetComponent<SpriteRenderer>();
 
+
+        if (tagComponent == null)
+            tagComponent = FindObjectOfType<GASTagComponent>();
+        if (_state == null)
+            _state = gameObject.GetComponent<GASAttributeSetComponent>();
+        if (abilityComponent == null)
+            abilityComponent = gameObject.GetComponent<GASAbilityComponent>();
+        if (cueComponent == null)
+            cueComponent = gameObject.GetComponent<GASCueComponent>();
+
+
         CurExp = 0;
     }
     [Button]
@@ -102,8 +128,17 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         weapon.EquipWeapon(this);
         Weapons.Add(weapon);
     }
+    public int GetWeaponLv(AbilityDefSO weapon)
+    {
+        return abilityComponent.GetAbilityLv(weapon);
+    }
+    public void AddWeapon(AbilityDefSO weapon)
+    {
+        abilityComponent.AddAbility(weapon);
+    }
     public void AddWeapon(baseWeapon weapon)
     {
+
         if (Weapons == null)
             Weapons = new List<baseWeapon>();
         if (Weapons.Exists(x => x == weapon))
@@ -120,6 +155,10 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
 
     public void Update()
     {
+        if (isDead)
+            return;
+
+
         foreach (var weapon in Weapons)
             weapon.Action();
 
@@ -152,7 +191,15 @@ public class PlayerCharacter : Singleton<PlayerCharacter>
         StartCoroutine(coroutine);
     }
 
-
+    public void Hit(float dmg)
+    {
+        CurHp -= dmg;
+        if (CurHp <= 0)
+        {
+            anim.SetBool("Dead", true);
+            rigid.constraints = RigidbodyConstraints.FreezeAll;
+        }
+    }
     IEnumerator DelayLvUp()
     {
         while (InGameUI.Instance.SkillPickUI.gameObject.activeSelf)

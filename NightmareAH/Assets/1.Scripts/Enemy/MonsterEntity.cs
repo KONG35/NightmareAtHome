@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Xml;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface IBaseMonster
@@ -9,7 +10,8 @@ public interface IBaseMonster
     void ChaseUpdate();
     void AttackInit();
     void KnockInit();
-    void Hit(float dmg);
+   // void Hit(float dmg);
+    void Hit(AttributeDefSO TargetAttribute, float dmg);
     void DeadInit();
 }
 // 풀링 인터페이스: 오브젝트가 스폰될 때와 반환될 때 호출되는 메서드를 정의
@@ -18,6 +20,10 @@ public interface IPoolable
     void OnSpawn();
     void OnDespawn();
 }
+[RequireComponent(typeof(GASTagComponent))]
+[RequireComponent(typeof(GASAttributeSetComponent))]
+[RequireComponent(typeof(GASAbilityComponent))]
+[RequireComponent(typeof(GASCueComponent))]
 public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 {
     public baseMonster monster;
@@ -33,6 +39,12 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
     private float DropExpChance = 0.3f;
 
+
+    GASTagComponent tagComponent;
+    GASAttributeSetComponent _state;
+    GASAbilityComponent abilityComponent;
+    GASCueComponent cueCompoent;
+
     private void Awake()
     {
         isDead = false;
@@ -42,6 +54,16 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         animCtlr = gameObject.GetComponent<MonsterAnimController>();
 
         spawnManager = SpawnManager.Instance;
+
+        if (tagComponent == null)
+            tagComponent = gameObject.GetComponent<GASTagComponent>();
+        if (_state == null)
+            _state = gameObject.GetComponent<GASAttributeSetComponent>();
+        if (abilityComponent == null)
+            abilityComponent = gameObject.GetComponent<GASAbilityComponent>();
+        if (cueCompoent == null)
+            cueCompoent = gameObject.GetComponent<GASCueComponent>();
+
     }
     /// <summary>
     /// 스폰 Init문
@@ -125,6 +147,16 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         animCtlr.OnMonsterAnim(curState);
     }
 
+    public virtual void Hit(AttributeDefSO TargetAttribute, float dmg)
+    {
+        _state.ModifyValue(TargetAttribute, -dmg);
+        if(_state.GetValue(DataTableManager.Instance.GetSO(eAttributeSo.HP))<=0)
+        {
+            curState = MonsterState.Dead;
+        }
+    }
+
+    /*
     public virtual void Hit(float dmg)
     {
         monster.CurHp -= dmg;
@@ -133,6 +165,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
             curState = MonsterState.Dead;
         }
     }
+    */
     public virtual void DeadInit()
     {
         isDead = true;
