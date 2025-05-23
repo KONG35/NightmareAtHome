@@ -60,7 +60,6 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     private BoxCollider col;
 
     private float DropExpChance = 0.3f;
-    
     private float innerRadius = 10f;
     private float outerRadius = 15f;
     private void Awake()
@@ -239,11 +238,5 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         
         return new Vector3(target.x + Mathf.Cos(angle) * distance, target.y + Mathf.Sin(angle) * distance, 0f);
     }
-    private void OnCollisionEnter(Collision col)
-    {
-        if(col.transform.tag == "Player")
-        {
-            player.CurHp -= 10f;
-        }
-    }
+    
 }
