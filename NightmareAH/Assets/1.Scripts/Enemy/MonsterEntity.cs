@@ -13,18 +13,58 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 {
     public baseMonster monster;
     public Transform target { get; protected set; }
-    public bool isDead { get; protected set; }
+    
+    [SerializeField]
+    private bool isDead;
+    public bool IsDead
+    {
+        get => isDead;
+        private set
+        {
+            isDead = value;
+        }
+    }
 
-    public MonsterState curState { get; private set; }
-    public MonsterState prevState { get; private set; }
-
+    [SerializeField]
+    private MonsterState curState;
+    public MonsterState CurState
+    {
+        get => curState;
+        private set
+        {
+            curState = value;
+        }
+    }
+    [SerializeField]
+    private MonsterState prevState;
+    public MonsterState PrevState
+    {
+        get => prevState;
+        private set
+        {
+            prevState = value;
+        }
+    }
+    [SerializeField]
+    private int poolIndx;
+    public int PoolIndx
+    {
+        get => poolIndx;
+        private set
+        {
+            poolIndx = value;
+        }
+    }
     private MonsterAnimController animCtlr;
 
     private SpawnManager spawnManager;
 
-    private float DropExpChance = 0.3f;
-    public int poolIndx { get; private set; }
+    private PlayerCharacter player;
+    
+    private Rigidbody rigid;
+    private BoxCollider col;
 
+    private float DropExpChance = 0.3f;
     private float innerRadius = 10f;
     private float outerRadius = 15f;
 
@@ -36,12 +76,19 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
     private void Awake()
     {
-        isDead = false;
+        IsDead = false;
         curState = MonsterState.None;
-        prevState = MonsterState.None;
+        PrevState = MonsterState.None;
 
         animCtlr = gameObject.GetComponent<MonsterAnimController>();
+        rigid = gameObject.GetComponent<Rigidbody>();
+        col = gameObject.GetComponent<BoxCollider>();
 
+        if (player == null)
+            player = FindObjectOfType<PlayerCharacter>();
+
+        target = player.transform;
+        
         spawnManager = SpawnManager.Instance;
 
         if (_state == null)
@@ -58,7 +105,9 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     /// </summary>
     protected void Init()
     {
-        isDead = false;
+        IsDead = false;
+        col.enabled = true;
+        rigid.isKinematic = false;
         curState = MonsterState.Chase;
     }
     public virtual void Update()
@@ -66,12 +115,12 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         if (target == null)
             return;
         
-        if (isDead) return;
+        if (IsDead) return;
 
 
-        if(prevState != curState)
+        if(PrevState != curState)
         {
-            prevState = curState;
+            PrevState = curState;
 
             
             switch (curState)
@@ -153,7 +202,10 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
     public virtual void DeadInit()
     {
-        isDead = true;
+        IsDead = true;
+        col.enabled = false;
+        rigid.isKinematic = true;
+        rigid.velocity = Vector3.zero;
         animCtlr.OnMonsterAnim(curState);
         DropItem();
     }
@@ -167,9 +219,9 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
 
         // !수정하기
         if (target == null)
-            target = FindObjectOfType<PlayerCharacter>().transform;
+            target = player.transform;
 
-        gameObject.transform.position = SetPosition(target.transform.position);
+        gameObject.transform.position = SetPosition(target.position);
         gameObject.SetActive(true);
     }
     /// <summary>
@@ -205,7 +257,7 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
     }
     public void SetPoolIndex(int _idx)
     {
-        poolIndx = _idx;
+        PoolIndx = _idx;
     }
 
     private Vector3 SetPosition(Vector3 target)
@@ -215,4 +267,5 @@ public class MonsterEntity : MonoBehaviour, IBaseMonster, IPoolable
         
         return new Vector3(target.x + Mathf.Cos(angle) * distance, target.y + Mathf.Sin(angle) * distance, 0f);
     }
+    
 }

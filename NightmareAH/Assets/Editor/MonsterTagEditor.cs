@@ -15,12 +15,13 @@ public class MonsterTagEditor : Editor
         bool hasEntity = go.GetComponent<MonsterEntity>() != null;
         bool hasDraw = go.GetComponent<MonsterDrawLayer>() != null;
         bool hasAniCtlr = go.GetComponent<MonsterAnimController>() != null;
+        bool hasColCtlr = go.GetComponent<MonsterColController>() != null;
 
         bool hasAnimator = go.GetComponent<Animator>() != null;
         bool hasRenderer = go.GetComponent<SpriteRenderer>() != null;
         bool hasCollider = go.GetComponent<Collider>() != null;
 
-        if (!hasEntity || !hasAniCtlr || !hasDraw || !hasAnimator || !hasRenderer || !hasCollider)
+        if (!hasEntity || !hasAniCtlr || !hasDraw || !hasAnimator || !hasRenderer || !hasCollider ||!hasColCtlr)
         {
             EditorGUILayout.HelpBox("몬스터 구성 누락됨: 아래 버튼으로 자동 추가할 수 있습니다.", MessageType.Error);
         }
@@ -34,6 +35,7 @@ public class MonsterTagEditor : Editor
             if (!hasEntity) go.AddComponent<MonsterEntity>();
             if (!hasDraw) go.AddComponent<MonsterDrawLayer>();
             if (!hasAniCtlr) go.AddComponent<MonsterAnimController>();
+            if (!hasColCtlr) go.AddComponent<MonsterColController>();
 
             if (!hasAnimator) go.AddComponent<Animator>();
             if (!hasRenderer) go.AddComponent<SpriteRenderer>();

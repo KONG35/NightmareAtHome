@@ -27,10 +27,10 @@ public class SpawnManager : Singleton<SpawnManager>
     public MonsterFactory monsterFactory;
 
 
-
     private ObjectPool<ItemBase> ItemPool;
     public List<ItemBase> ItemPrefabList;
 
+    public ParticleSystem bloodParticle;
     private void Start()
     {
         ItemPool = new ObjectPool<ItemBase>(ItemPrefabList[0],100,false, this.transform);
