@@ -209,10 +209,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af6f9c19dd0fd3428bb75ead7e4c6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHp: 100
+  ExpLvTable:
+  - 10
+  - 20
+  - 30
+  - 40
+  - 50
+  - 60
+  - 70
+  - 80
+  CurGold: 0
   Enemy:
     serializedVersion: 2
     m_Bits: 1024
-  TestProjectObj: {fileID: 383803986961391468, guid: 55ee354401124d6438debe5e707b6b83, type: 3}
+  TestProjectObj: {fileID: 1603934959788401815, guid: 8466669a8a5ad7043bc9d3cdd482169f, type: 3}
   spawner: {fileID: 0}
   rigid: {fileID: 0}
   anim: {fileID: 0}

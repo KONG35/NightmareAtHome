@@ -34,7 +34,7 @@ public class KitchenKnifeWeapon : ProjectlieWeapon
             {
                 if (other.gameObject.CompareTag("Enemy"))
                 {
-                    other.gameObject.GetComponent<MonsterEntity>().Hit(Damage);
+                    //other.gameObject.GetComponent<MonsterEntity>().Hit(Damage);
                     PierceCount--;
                     if (PierceCount < 0)
                     {
