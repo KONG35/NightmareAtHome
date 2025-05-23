@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff84c8f48d116474bb99b57038813217, type: 3}
+  m_Name: Flapper
+  m_EditorClassIdentifier: 
+  abilityName: Flapper
+  LevelState:
+  - level: 1
+    Damage: 50
+    CharactorDamageMultiplier: 0.5
+    Cooldown: 2
+    MinRange: 0
+    MaxRange: 1
+    Speed: 1
+    PierceCount: 0
+    BounceCount: 0
+    Scale: 1
+    costs: []
+  - level: 2
+    Damage: 60
+    CharactorDamageMultiplier: 0.5
+    Cooldown: 2
+    MinRange: 0
+    MaxRange: 1
+    Speed: 1
+    PierceCount: 0
+    BounceCount: 0
+    Scale: 1
+    costs: []
+  - level: 3
+    Damage: 70
+    CharactorDamageMultiplier: 0.5
+    Cooldown: 2
+    MinRange: 0
+    MaxRange: 1
+    Speed: 1
+    PierceCount: 0
+    BounceCount: 0
+    Scale: 1.05
+    costs: []
+  - level: 4
+    Damage: 80
+    CharactorDamageMultiplier: 0.5
+    Cooldown: 2
+    MinRange: 0
+    MaxRange: 1
+    Speed: 1
+    PierceCount: 0
+    BounceCount: 0
+    Scale: 1.1
+    costs: []
+  - level: 5
+    Damage: 90
+    CharactorDamageMultiplier: 0.5
+    Cooldown: 2
+    MinRange: 0
+    MaxRange: 1
+    Speed: 1
+    PierceCount: 0
+    BounceCount: 0
+    Scale: 1.2
+    costs: []
+  DamageAttribute: {fileID: 11400000, guid: 26f75d8bbf22a1243978f5724fc4fd71, type: 2}
+  DamagetargetAttribute: {fileID: 11400000, guid: 7bd4496e18d3a794781aa278d7d8e0d8, type: 2}
+  requiredTags: []
+  blockedTags: []
+  Icon: {fileID: -1906050294, guid: 3c96b4666cd714b4bb8d903e6e75e0a9, type: 3}
+  executor: {fileID: 11400000, guid: 1f24126186162bf46a1eda95af0755d9, type: 2}
