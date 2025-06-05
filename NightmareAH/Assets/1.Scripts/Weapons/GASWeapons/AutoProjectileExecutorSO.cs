@@ -40,6 +40,10 @@ public class AutoProjectileExecutorSO : AbilityExecutorSO
                 }
             }
         };
+        bullet.MaxRangeAction = () =>
+        {
+            ObjPool.ReturnObject(bullet);
+        };
         WaitTime -= State.Cooldown;
     }
     public GameObject FindClosestEnemy(Transform Caster, float radius)

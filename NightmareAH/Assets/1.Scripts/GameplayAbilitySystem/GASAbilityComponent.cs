@@ -55,7 +55,7 @@ class AbilitySpec
     }
     public void SetLevel(int newLevel)
     {
-        Level = Mathf.Clamp(newLevel, 1, def.LevelState.Count);
+        Level = Mathf.Clamp(newLevel, 1, def.LevelState.Count-1);
     }
     public void Action()
     {

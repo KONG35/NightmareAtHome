@@ -53,6 +53,7 @@ public class SkillPickItemUI : MonoBehaviour
     {
         time += Time.deltaTime;
         Mathf.PingPong(time, 1f);
+        if(CurLv<LvImage.Count)
         LvImage[CurLv].color = Color.Lerp(Color.white, Color.black, Mathf.PingPong(time, 1f));
     }
 
