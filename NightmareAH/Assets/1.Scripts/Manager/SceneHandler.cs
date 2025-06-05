@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class SceneHandler : Singleton<SceneHandler>
 {
-    private List<LoadingSheetTxt> loadingDataList = new List<LoadingSheetTxt>();
+   // private List<LoadingSheetTxt> loadingDataList = new List<LoadingSheetTxt>();
     private Coroutine unloadCor;
     private Coroutine loadCor;
 
@@ -71,10 +71,10 @@ public class SceneHandler : Singleton<SceneHandler>
     IEnumerator AsyncLoadSceneCor(string _scName, LoadSceneMode _mode)
     {
         // LoadingData 리스트 가져오기
-        if (loadingDataList.Count == 0)
-            loadingDataList = GoogleSheetLoader.Instance.GetDataList<LoadingSheetTxt>();
+       // if (loadingDataList.Count == 0)
+       //     loadingDataList = GoogleSheetLoader.Instance.GetDataList<LoadingSheetTxt>();
 
-        int ranIdx = UnityEngine.Random.Range(0, loadingDataList.Count);
+        //int ranIdx = UnityEngine.Random.Range(0, loadingDataList.Count);
 
         yield return null;
 
@@ -110,8 +110,8 @@ public class SceneHandler : Singleton<SceneHandler>
     IEnumerator AsyncUnLoadSceneCor(string _scName)
     {
         // LoadingData 리스트 가져오기
-        List<LoadingSheetTxt> languageDataList = GoogleSheetLoader.Instance.GetDataList<LoadingSheetTxt>();
-        int ranIdx = UnityEngine.Random.Range(0, languageDataList.Count);
+        //List<LoadingSheetTxt> languageDataList = GoogleSheetLoader.Instance.GetDataList<LoadingSheetTxt>();
+       // int ranIdx = UnityEngine.Random.Range(0, languageDataList.Count);
 
         yield return null;
 
