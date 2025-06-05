@@ -10,12 +10,12 @@ public class MonsterFactory : MonoBehaviour
     // Inspector에 몬스터 prefab을 할당
     [SerializeField]
     private MonsterEntity[] monsterPrefabs;
-    private int initialPoolSize = 50;
 
     private List<SpawnSheetData> spawnList;
     private List<MonsterSheetData> monsterDataList;
 
     private List<ObjectPool<MonsterEntity>> poolList;
+    private int initialPoolSize = 50;
 
     [Button]
     public void Init()
@@ -54,14 +54,6 @@ public class MonsterFactory : MonoBehaviour
 
     }
     [Button]
-    private void ContinusSpawnEdit()
-    {
-        for(int i = 0; i < 10; i++)
-        {
-            var m = poolList[0].GetObject();
-        }
-    }
-    [Button]
     private void SheetSpawnStartEdit()
     {
         // 구글시트에서 받아온대로 spawn
@@ -94,8 +86,11 @@ public class MonsterFactory : MonoBehaviour
     }
 
     // 사용 후 몬스터를 반환할 때
+    // 반환 후 리스폰
     public void ReturnMonster(MonsterEntity monster)
     {
         poolList[monster.PoolIndx].ReturnObject(monster);
+        poolList[monster.PoolIndx].GetObject();
+
     }
 }

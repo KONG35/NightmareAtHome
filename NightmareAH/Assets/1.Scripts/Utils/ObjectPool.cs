@@ -10,7 +10,6 @@ public class ObjectPool<T> where T : Component, IPoolable
     private T prefab;
     private Transform parent;
     public int maxSize { get;  private set; }
-    private bool isContinusPool;
     public ObjectPool(T prefab, int initialSize, bool _isContinus, Transform parent = null)
     {
         this.prefab = prefab;
@@ -18,7 +17,6 @@ public class ObjectPool<T> where T : Component, IPoolable
         pool = new Queue<T>();
         active = new HashSet<T>();
         maxSize = initialSize;
-        isContinusPool = _isContinus;
 
         // 기본 prefab을 이용해 초기 풀을 만듬
         for (int i = 0; i < initialSize; i++)
@@ -99,16 +97,5 @@ public class ObjectPool<T> where T : Component, IPoolable
         obj.OnDespawn();
         pool.Enqueue(obj);
         active.Remove(obj);
-
-        if(isContinusPool)
-        {
-            obj.OnSpawn();
-            pool.Dequeue();
-            active.Add(obj);
-        }
-    }
-    public void SetContinusPool(bool _isContinus)
-    {
-        isContinusPool = _isContinus;
     }
 }
