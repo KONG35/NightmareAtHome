@@ -43,7 +43,7 @@ public class MonsterDrawLayer : MonoBehaviour
         if (monster.target == null)
             return;
 
-        if (monster.isDead) 
+        if (monster.IsDead) 
             return;
 
         if (prevTargetPos == diableVec)
